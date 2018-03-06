@@ -1,5 +1,6 @@
 package com.example.studente.buynow;
 
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -30,6 +31,17 @@ public class Reg_Act extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if(pass.getText().toString().equals("") && pass.getText().toString().equals("")){
+                    pass.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.darker_gray), PorterDuff.Mode.SRC_ATOP);
+                    passcontr.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.darker_gray), PorterDuff.Mode.SRC_ATOP);
+                }
+                if(passcontr.getText().toString().compareTo(pass.getText().toString())==0){
+                    pass.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_green_light), PorterDuff.Mode.SRC_ATOP);
+                    passcontr.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_green_light), PorterDuff.Mode.SRC_ATOP);
+                }else{
+                    pass.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_red_dark), PorterDuff.Mode.SRC_ATOP);
+                    passcontr.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_red_dark), PorterDuff.Mode.SRC_ATOP);
+                }
                 passcontr.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -43,8 +55,16 @@ public class Reg_Act extends AppCompatActivity {
 
                     @Override
                     public void afterTextChanged(Editable s) {
+                        if(pass.getText().toString().equals("") && pass.getText().toString().equals("")){
+                            pass.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.darker_gray), PorterDuff.Mode.SRC_ATOP);
+                            passcontr.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.darker_gray), PorterDuff.Mode.SRC_ATOP);
+                        }
                         if(pass.getText().toString().compareTo(passcontr.getText().toString())==0){
-
+                            pass.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_green_light), PorterDuff.Mode.SRC_ATOP);
+                            passcontr.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_green_light), PorterDuff.Mode.SRC_ATOP);
+                        }else{
+                            pass.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_red_dark), PorterDuff.Mode.SRC_ATOP);
+                            passcontr.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.holo_red_dark), PorterDuff.Mode.SRC_ATOP);
                         }
                     }
                 });
