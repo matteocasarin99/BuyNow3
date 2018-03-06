@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Accedi_Act"></activity>
+        <activity android:name=".Accedi_Act" />
+        <activity android:name=".Reg_Act"></activity>
     </application>
 
 </manifest>
