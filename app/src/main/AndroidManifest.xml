@@ -18,7 +18,11 @@
         </activity>
         <activity android:name=".Accedi_Act" />
         <activity android:name=".Reg_Act" />
-        <activity android:name=".Accedi_ActRoot"></activity>
+        <activity android:name=".Accedi_ActRoot" />
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
