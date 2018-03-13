@@ -11,6 +11,8 @@ public class Accedi_Act extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interfaccia);
+        Utenti_Password ut=(Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
+
 
     }
 }

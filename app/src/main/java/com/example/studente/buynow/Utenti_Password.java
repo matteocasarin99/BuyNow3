@@ -1,12 +1,13 @@
 package com.example.studente.buynow;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by studente on 13/03/2018.
  */
 
-public class Utenti_Password {
+public class Utenti_Password implements Serializable{
     private ArrayList<Utente> array_utnorm=new ArrayList<Utente>();
     private ArrayList<Utente> array_utadmin=new ArrayList<Utente>();
     public Utenti_Password(){
@@ -32,5 +33,8 @@ public class Utenti_Password {
             }
         }
         return tipo;
+    }
+    public Utente getUtente(){
+        return array_utnorm.get(0);
     }
 }

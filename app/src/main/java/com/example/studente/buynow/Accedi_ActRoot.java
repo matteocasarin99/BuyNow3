@@ -9,5 +9,6 @@ public class Accedi_ActRoot extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interfaccia_root);
+        Utenti_Password ut=(Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
     }
 }
