@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Accedi_Act" />
-        <activity android:name=".Reg_Act"></activity>
+        <activity android:name=".Reg_Act" />
+        <activity android:name=".Accedi_ActRoot"></activity>
     </application>
 
 </manifest>
