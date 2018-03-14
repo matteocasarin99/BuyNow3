@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i2=new Intent(MainActivity.this,Reg_Act.class);
+                i2.putExtra("Utenti",a);
                 startActivity(i2);
             }
         });

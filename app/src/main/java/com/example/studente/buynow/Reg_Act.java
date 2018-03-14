@@ -1,5 +1,7 @@
 package com.example.studente.buynow;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Reg_Act extends AppCompatActivity {
 
@@ -16,8 +19,12 @@ public class Reg_Act extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrazione);
+        final Utenti_Password ut=(Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
         final EditText pass=findViewById(R.id.password);
         final EditText passcontr= findViewById(R.id.passwordContr);
+        final EditText nome= findViewById(R.id.nomeReg);
+        final EditText cognome=findViewById(R.id.cognomeReg);
+        final EditText email=findViewById(R.id.emailReg);
         pass.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -75,6 +82,24 @@ public class Reg_Act extends AppCompatActivity {
         regEff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(nome.getText().toString().compareTo("")==0 || cognome.getText().toString().compareTo("")==0 || email.getText().toString().compareTo("")==0){
+                    Context context = getApplicationContext();
+                    CharSequence text = "Compila i campi vuoti!!";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }else{
+                    Utente e =new Utente(nome.getText().toString(),cognome.getText().toString(),pass.getText().toString(),email.getText().toString());
+                    ut.addnewUtente(e);
+                    Context context = getApplicationContext();
+                    CharSequence text = "Registrato!";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    Intent i3=new Intent(Reg_Act.this,Accedi_Act.class);
+                    i3.putExtra("Utenti",ut);
+                    startActivity(i3);
+                }
 
             }
         });
