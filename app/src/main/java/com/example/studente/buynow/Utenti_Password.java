@@ -8,9 +8,10 @@ import java.util.ArrayList;
  */
 
 public class Utenti_Password implements Serializable{
-    private ArrayList<Utente> array_utnorm=new ArrayList<Utente>();
-    private ArrayList<Utente> array_utadmin=new ArrayList<Utente>();
-    private ArrayList<Prodotti> array_prodotti=new ArrayList<>();
+    private static ArrayList<Utente> array_utnorm=new ArrayList<Utente>();
+    private static ArrayList<Utente> array_utadmin=new ArrayList<Utente>();
+    private static ArrayList<Prodotti> array_prodotti=new ArrayList<>();
+
     public Utenti_Password(){
         array_utadmin.add(new Utente("Matteo","Casarin","root","sonyxperiazcasa@gmail.com"));
         array_utadmin.add(new Utente("Admin","Stra","1234","admin@me.com"));
@@ -19,6 +20,7 @@ public class Utenti_Password implements Serializable{
         array_prodotti.add(new Prodotti("Caffè","Caffè miscela arabica 100% naturale e biologico","Perù",12.42,0,4));
         array_prodotti.add(new Prodotti("Cioccolata ","Cioccolato al latte naturale e biologico","Brasile",2.42,0,20));
         array_prodotti.add(new Prodotti("Tè Nero","Foglie di Tè Nero seccate al sole in bustina(4 per scatola)","India",5.50,0,6));
+
     }
     public void addnewUtente(Utente e){
         array_utnorm.add(e);

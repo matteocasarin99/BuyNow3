@@ -46,13 +46,11 @@ public class Accedi_Act extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interfaccia);
         ut=(Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
-        this.createAdapter();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mSectionsPagerAdapter.getList();
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -62,9 +60,6 @@ public class Accedi_Act extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-    }
-    public void createAdapter(){
-        adapter=new ArrayAdapter<Prodotti>(this,R.layout.tab1,ut.getArray_prodotti());
     }
 
 
@@ -141,7 +136,7 @@ public class Accedi_Act extends AppCompatActivity {
            switch(position){
                case 0:{
                    TabFragment1 tab1=new TabFragment1();
-                   list=tab1.receiveAdaper();
+                   
                    return tab1;
                }
                case 1:{
@@ -161,9 +156,10 @@ public class Accedi_Act extends AppCompatActivity {
             // Show 3 total pages.
             return 3;
         }
-
-        public ListView getList() {
-            return list;
-        }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("Utenti",ut);
     }
 }
