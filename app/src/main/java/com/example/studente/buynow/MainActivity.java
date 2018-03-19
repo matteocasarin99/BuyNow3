@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
+    final Utenti_Password a=new Utenti_Password();
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,8 +18,6 @@ public class MainActivity extends AppCompatActivity {
         Button accedi=(Button) findViewById(R.id.accedi);
         final EditText ut= findViewById(R.id.utente);
         final EditText pass=findViewById(R.id.password);
-
-        final Utenti_Password a=new Utenti_Password();
         accedi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,5 +58,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i2);
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("Utenti",a);
     }
 }

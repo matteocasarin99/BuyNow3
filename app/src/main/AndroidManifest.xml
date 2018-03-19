@@ -16,12 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Accedi_Act" />
         <activity android:name=".Reg_Act" />
         <activity android:name=".Accedi_ActRoot" />
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Accedi_Act"
+            android:label="@string/title_activity_accedi_"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
