@@ -12,6 +12,7 @@ public class Prodotti implements Serializable{
     private double sconto;
     private int quantitàDisp;
 
+
     public Prodotti(String nome, String descrizione, String provenienza, double prezzo, double sconto, int quantitàDisp) {
         this.nome = nome;
         this.descrizione = descrizione;

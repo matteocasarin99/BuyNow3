@@ -20,6 +20,7 @@ public class Reg_Act extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrazione);
         final Utenti_Password ut=(Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
+
         final EditText pass=findViewById(R.id.password);
         final EditText passcontr= findViewById(R.id.passwordContr);
         final EditText nome= findViewById(R.id.nomeReg);

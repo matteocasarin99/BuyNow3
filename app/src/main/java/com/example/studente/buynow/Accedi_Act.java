@@ -60,6 +60,7 @@ public class Accedi_Act extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        
     }
 
 
@@ -136,7 +137,7 @@ public class Accedi_Act extends AppCompatActivity {
            switch(position){
                case 0:{
                    TabFragment1 tab1=new TabFragment1();
-                   
+
                    return tab1;
                }
                case 1:{
