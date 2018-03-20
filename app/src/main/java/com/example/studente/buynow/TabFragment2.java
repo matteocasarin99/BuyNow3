@@ -14,17 +14,20 @@ public class TabFragment2 extends Fragment {
     private ArrayAdapter<Prodotti> adapter;
     public Utenti_Password ut;
     private ListView list;
+    public View v;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.tab2, container, false);
+        v=inflater.inflate(R.layout.tab2, container, false);
         ImageButton btnCerca=v.findViewById(R.id.imgBtnCerca);
-        EditText textCerca=v.findViewById(R.id.textCerca);
+        final EditText textCerca=v.findViewById(R.id.textCerca);
         ut=Accedi_Act.ut;
+        list=v.findViewById(R.id.listCerca);
         btnCerca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                adapter = new ArrayAdapter<Prodotti>(v.getContext(),android.R.layout.simple_list_item_1, ut.searchProdotti(textCerca.getText().toString()));
+                list.setAdapter(adapter);
             }
         });
         return v;

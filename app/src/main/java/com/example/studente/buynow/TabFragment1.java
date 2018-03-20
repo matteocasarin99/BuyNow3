@@ -28,7 +28,6 @@ public class TabFragment1 extends Fragment{
     private View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         view=inflater.inflate(R.layout.tab1, container, false);
         list=view.findViewById(R.id.list);
         ut=Accedi_Act.ut;

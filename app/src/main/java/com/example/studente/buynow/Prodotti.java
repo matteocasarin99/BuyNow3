@@ -54,7 +54,7 @@ public class Prodotti implements Serializable{
         this.prezzo = prezzo;
     }
 
-    public double getSconto() {
+    private double getSconto() {
         return sconto;
     }
 
@@ -72,11 +72,11 @@ public class Prodotti implements Serializable{
 
     @Override
     public String toString() {
-        return
-                "" + nome  +
-                ", Prezzo=" + prezzo +
-                ", Sconto=" + sconto +
-                ", Quantità Disponibile=" + quantitàDisp
-                ;
+        if(sconto==0){
+            return "" + nome + ", Prezzo=" + prezzo +", Provenienza="+provenienza+ ", Quantità Disponibile=" + quantitàDisp;
+        }else{
+            return "" + nome + ", Prezzo=" + prezzo +", Provenienza="+provenienza+ ", Sconto="+sconto+ ", Quantità Disponibile=" + quantitàDisp;
+        }
+
     }
 }
