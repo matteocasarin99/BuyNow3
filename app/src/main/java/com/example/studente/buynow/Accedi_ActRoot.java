@@ -125,9 +125,22 @@ public class Accedi_ActRoot extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch(position){
+                case 0:{
+                    TabRoot1 tab1=new TabRoot1();
+
+                    return tab1;
+                }
+                case 1:{
+                    TabRoot2 tab2=new TabRoot2();
+                    return tab2;
+                }
+                case 2:{
+                    TabRoot3 tab3=new TabRoot3();
+                    return tab3;
+                }
+            }
+            return null;
         }
 
         @Override
