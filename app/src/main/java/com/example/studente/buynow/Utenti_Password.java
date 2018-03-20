@@ -7,7 +7,6 @@ import java.util.ArrayList;
  * Created by studente on 13/03/2018.
  */
 
-
 public class Utenti_Password implements Serializable{
     private static ArrayList<Utente> array_utnorm=new ArrayList<Utente>();
     private static ArrayList<Utente> array_utadmin=new ArrayList<Utente>();

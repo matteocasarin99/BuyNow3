@@ -6,7 +6,6 @@ import java.io.Serializable;
  * Created by studente on 13/03/2018.
  */
 
-
 class Utente implements Serializable{
     private String nome_utente,cognome_utente,password,email;
     public Utente(String nome,String cognome,String pass,String mail){

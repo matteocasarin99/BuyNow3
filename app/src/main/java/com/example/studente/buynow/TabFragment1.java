@@ -1,25 +1,16 @@
 package com.example.studente.buynow;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import java.util.zip.Inflater;
 
 /**
  * Created by Matteo on 19/03/2018.
  */
-
 
 public class TabFragment1 extends Fragment{
     private ArrayAdapter<Prodotti> adapter;
