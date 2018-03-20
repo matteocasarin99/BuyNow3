@@ -73,10 +73,10 @@ public class Prodotti implements Serializable{
     @Override
     public String toString() {
         return
-                "" + nome + '\'' +
+                "" + nome  +
                 ", Prezzo=" + prezzo +
                 ", Sconto=" + sconto +
-                ", Quantità Disponibile=" + quantitàDisp +
-                '}';
+                ", Quantità Disponibile=" + quantitàDisp
+                ;
     }
 }

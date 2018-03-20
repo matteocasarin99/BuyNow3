@@ -23,20 +23,19 @@ import java.util.zip.Inflater;
 
 public class TabFragment1 extends Fragment{
     private ArrayAdapter<Prodotti> adapter;
-    private Utenti_Password ut;
+    public Utenti_Password ut;
     private ListView list;
     private View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         view=inflater.inflate(R.layout.tab1, container, false);
         list=view.findViewById(R.id.list);
-        /*adapter = new ArrayAdapter<Prodotti>(view.getContext(), R.layout.tab1, ut.getArray_prodotti());
-        list.setAdapter(adapter);*/
+        ut=Accedi_Act.ut;
+        adapter = new ArrayAdapter<Prodotti>(view.getContext(),android.R.layout.simple_list_item_1, ut.getArray_prodotti());
+        list.setAdapter(adapter);
         return view;
     }
 
-    public void showList(Utenti_Password ut) {
-        this.ut=ut;
 
-    }
 }

@@ -97,7 +97,7 @@ public class Reg_Act extends AppCompatActivity {
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
-                    Intent i3=new Intent(Reg_Act.this,Accedi_Act.class);
+                    Intent i3=new Intent(Reg_Act.this,MainActivity.class);
                     i3.putExtra("Utenti",ut);
                     startActivity(i3);
                 }

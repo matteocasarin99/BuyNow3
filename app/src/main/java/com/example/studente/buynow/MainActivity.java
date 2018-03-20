@@ -10,11 +10,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    final Utenti_Password a=new Utenti_Password();
+    Utenti_Password a=new Utenti_Password();
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(getIntent().getExtras()!=null){
+            a=(Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
+        }
+
         Button accedi=(Button) findViewById(R.id.accedi);
         final EditText ut= findViewById(R.id.utente);
         final EditText pass=findViewById(R.id.password);

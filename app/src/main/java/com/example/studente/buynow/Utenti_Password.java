@@ -19,7 +19,7 @@ public class Utenti_Password implements Serializable{
         array_utnorm.add(new Utente("Carlo","Albenga","sonogay","carlogay@icloud.com"));
         array_utnorm.add(new Utente("Alex","Pugnaghi","marcio","alex@icloud.com"));
         array_prodotti.add(new Prodotti("Caffè","Caffè miscela arabica 100% naturale e biologico","Perù",12.42,0,4));
-        array_prodotti.add(new Prodotti("Cioccolata ","Cioccolato al latte naturale e biologico","Brasile",2.42,0,20));
+        array_prodotti.add(new Prodotti("Cioccolata ","Cioccolata al latte naturale e biologica","Brasile",2.42,0,20));
         array_prodotti.add(new Prodotti("Tè Nero","Foglie di Tè Nero seccate al sole in bustina(4 per scatola)","India",5.50,0,6));
 
     }
@@ -40,6 +40,10 @@ public class Utenti_Password implements Serializable{
             }
         }
         return tipo;
+    }
+    public ArrayList<Prodotti> searchProdotti(String cerca){
+        ArrayList<Prodotti> array=new ArrayList<Prodotti>();
+        return array;
     }
     public Utente getUtente(){
         return array_utnorm.get(0);
