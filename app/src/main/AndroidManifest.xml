@@ -17,7 +17,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Reg_Act" />
-        <activity android:name=".Accedi_ActRoot" />
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
@@ -25,6 +24,10 @@
         <activity
             android:name=".Accedi_Act"
             android:label="@string/title_activity_accedi_"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Accedi_ActRoot"
+            android:label="@string/title_activity_accedi__act_root"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
