@@ -1,5 +1,6 @@
 package com.example.studente.buynow;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -75,7 +76,8 @@ public class Accedi_Act extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settingsStand) {
+            //Intent i4=new Intent(Accedi_Act.this,)
             return true;
         }
 
