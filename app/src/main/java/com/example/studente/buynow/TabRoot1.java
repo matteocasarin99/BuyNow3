@@ -20,6 +20,7 @@ public class TabRoot1 extends Fragment{
         ut=Accedi_ActRoot.ut;
         EditText nomeProd=view.findViewById(R.id.txtNmPr);
 
+
         return view;
     }
 }
