@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class Accedi_ActRoot extends AppCompatActivity {
-
+    static Utenti_Password ut;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -32,11 +32,13 @@ public class Accedi_ActRoot extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interfaccia_root);
-
+        ut=(Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -138,6 +140,10 @@ public class Accedi_ActRoot extends AppCompatActivity {
                 case 2:{
                     TabRoot3 tab3=new TabRoot3();
                     return tab3;
+                }
+                case 3:{
+                    TabRoot4 tab4=new TabRoot4();
+                    return tab4;
                 }
             }
             return null;

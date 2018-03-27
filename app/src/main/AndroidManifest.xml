@@ -9,23 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Reg_Act" />
+        <activity android:name=".Reg_Act" android:screenOrientation="portrait"/>
         <activity
             android:name=".Accedi_Act"
             android:label="@string/title_activity_accedi_"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Accedi_ActRoot"
             android:label="@string/title_activity_accedi__act_root"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AccountSettings"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AccountSettings" ></activity>
     </application>
 
 </manifest>

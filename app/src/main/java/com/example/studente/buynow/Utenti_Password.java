@@ -111,7 +111,7 @@ public class Utenti_Password implements Serializable{
     public Utente getUtente(){
         return array_utnorm.get(0);
     }
-
+    public void addProdotto(Prodotti e){array_prodotti.add(e);}
     public ArrayList<Prodotti> getArray_prodotti() {
         return array_prodotti;
     }

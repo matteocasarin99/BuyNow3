@@ -39,6 +39,12 @@
                 android:text="Nuovo Prodotto" />
 
             <android.support.design.widget.TabItem
+                android:id="@+id/tabItem4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prodotti" />
+
+            <android.support.design.widget.TabItem
                 android:id="@+id/tabUtenti"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
