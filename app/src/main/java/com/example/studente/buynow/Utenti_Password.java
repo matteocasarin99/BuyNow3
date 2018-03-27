@@ -1,6 +1,13 @@
 package com.example.studente.buynow;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -11,6 +18,9 @@ public class Utenti_Password implements Serializable{
     private static ArrayList<Utente> array_utnorm=new ArrayList<Utente>();
     private static ArrayList<Utente> array_utadmin=new ArrayList<Utente>();
     private static ArrayList<Prodotti> array_prodotti=new ArrayList<>();
+    JSONObject obj;
+    JSONArray array;
+    JsonParse jreader;
 
     public Utenti_Password(){
         array_utadmin.add(new Utente("Matteo","Casarin","root","sonyxperiazcasa@gmail.com"));
@@ -25,10 +35,59 @@ public class Utenti_Password implements Serializable{
     public void addnewUtente(Utente e){
         array_utnorm.add(e);
     }
-    public String search_utente(String nome,String pass){
-        int i;
+    public String search_utente(String nome,String password){
         String tipo="nessuno";
-        for(i=0;i<array_utnorm.size();i++){
+        try {
+            URL url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=select%20*%20from%20utenti_admin");
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+            String s = response.toString();
+            String nm, pass;
+            array = jreader.responseJson(s);
+            for (int i=0;i<array.size();i++) {
+                obj = (JSONObject) array.get(i);
+                nm = obj.get("nome").toString();
+                pass = obj.get("password").toString();
+                if (nm.compareTo(nome) == 0 && pass.compareTo(password) == 0) {
+                    tipo = "root";
+                }
+            }
+            url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=select%20*%20from%20utenti");
+            connection = (HttpURLConnection) url1.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+            connection.setRequestMethod("GET");
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            response = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+            s = response.toString();
+
+            array = jreader.responseJson(s);
+            for (int j=0;j<array.size();j++) {
+                obj = (JSONObject) array.get(j);
+                nm = obj.get("nome").toString();
+                pass = obj.get("password").toString();
+                if (nm.compareTo(nome) == 0 && pass.compareTo(password) == 0) {
+                    tipo = "standard";
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            System.out.println("\nDone");
+        }
+        /*for(i=0;i<array_utnorm.size();i++){
             if(nome.compareTo(array_utnorm.get(i).getNome_utente())==0 && pass.compareTo(array_utnorm.get(i).getPassword())==0){
                 tipo="normale";
             }
@@ -37,7 +96,7 @@ public class Utenti_Password implements Serializable{
             if (nome.compareTo(array_utadmin.get(i).getNome_utente()) == 0 && pass.compareTo(array_utadmin.get(i).getPassword()) == 0) {
                 tipo = "root";
             }
-        }
+        }*/
         return tipo;
     }
     public ArrayList<Prodotti> searchProdotti(String cerca){
