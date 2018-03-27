@@ -35,17 +35,20 @@ public class Utenti_Password implements Serializable{
     public boolean addnewUtente(Utente e){
         boolean b = false;
         try {
+            System.out.println(e);
             URL url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=insert%20into%20utenti%20values(null,'"+e.getNome()+"','"+e.getPassword()+"','"+e.getCognome()+"','"+e.getEmail()+"')");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=insert%20into%20utenti%20values('','"+e.getNome()+"','"+e.getPassword()+"','"+e.getCognome()+"','"+e.getEmail()+"');");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
             connection.setRequestMethod("GET");
+            b=true;
         }catch(Exception e2) {
             e2.printStackTrace();
         }
+        System.out.println("DIOCANE");
         return b;
     }
-    public String search_utente(String nome,String password){
+    public String search_utente(String nome, String password){
         String tipo="nessuno";
         try {
             URL url1 = new URL(
@@ -102,17 +105,15 @@ public class Utenti_Password implements Serializable{
         return tipo;
     }
     public ArrayList<Prodotti> searchProdotti(String cerca){
-        ArrayList<Prodotti> array=new ArrayList<Prodotti>();
-        for(int i=0;i<array_prodotti.size();i++){
-            if(array_prodotti.get(i).toString().contains(cerca)){
+        ArrayList<Prodotti> array= new ArrayList<>();
+        int i;
+        for(i = 0; i<array_prodotti.size(); i++)
+            if (array_prodotti.get(i).toString().contains(cerca)) {
                 array.add(array_prodotti.get(i));
             }
-        }
         return array;
     }
-    /*public Utente getUtente(){
-        return array_utnorm.get(0);
-    }*/
+
     public void addProdotto(Prodotti e){array_prodotti.add(e);}
     public ArrayList<Prodotti> getArray_prodotti() {
         return array_prodotti;

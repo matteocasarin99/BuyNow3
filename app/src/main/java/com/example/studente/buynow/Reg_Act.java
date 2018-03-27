@@ -24,7 +24,7 @@ public class Reg_Act extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.registrazione);
-            final Utenti_Password ut = new Utenti_Password();
+            final Utenti_Password ut =(Utenti_Password)getIntent().getExtras().getSerializable("Utenti");
 
             final EditText pass = findViewById(R.id.password);
             final EditText passcontr = findViewById(R.id.passwordContr);
@@ -96,7 +96,7 @@ public class Reg_Act extends AppCompatActivity {
                         toast.show();
                     } else {
                         Utente e = new Utente(nome.getText().toString(), cognome.getText().toString(), pass.getText().toString(), email.getText().toString());
-                        if( ut.addnewUtente(e)==true){
+                        if(ut.addnewUtente(e)){
                             Context context = getApplicationContext();
                             CharSequence text = "Registrato!";
                             int duration = Toast.LENGTH_SHORT;
