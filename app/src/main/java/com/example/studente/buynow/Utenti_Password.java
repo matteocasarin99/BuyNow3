@@ -19,8 +19,8 @@ public class Utenti_Password implements Serializable{
     private static ArrayList<Utente> array_utadmin=new ArrayList<Utente>();
     private static ArrayList<Prodotti> array_prodotti=new ArrayList<>();
     JSONObject obj;
-    JSONArray array;
-    JsonParse jreader;
+    JSONArray array=new JSONArray();
+    JsonParse jreader=new JsonParse();
 
     public Utenti_Password(){
         array_utadmin.add(new Utente("Matteo","Casarin","root","sonyxperiazcasa@gmail.com"));
@@ -32,8 +32,18 @@ public class Utenti_Password implements Serializable{
         array_prodotti.add(new Prodotti("Tè Nero","Foglie di Tè Nero seccate al sole in bustina(4 per scatola)","India",5.50,0,6));
 
     }
-    public void addnewUtente(Utente e){
-        array_utnorm.add(e);
+    public boolean addnewUtente(Utente e){
+        boolean b = false;
+        try {
+            URL url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=insert%20into%20utenti%20values(null,'"+e.getNome()+"','"+e.getPassword()+"','"+e.getCognome()+"','"+e.getEmail()+"')");
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+            connection.setRequestMethod("GET");
+        }catch(Exception e2) {
+            e2.printStackTrace();
+        }
+        return b;
     }
     public String search_utente(String nome,String password){
         String tipo="nessuno";
@@ -78,25 +88,17 @@ public class Utenti_Password implements Serializable{
                 obj = (JSONObject) array.get(j);
                 nm = obj.get("nome").toString();
                 pass = obj.get("password").toString();
+                System.out.println(nm);
                 if (nm.compareTo(nome) == 0 && pass.compareTo(password) == 0) {
                     tipo = "standard";
                 }
             }
+            System.out.println(tipo);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             System.out.println("\nDone");
         }
-        /*for(i=0;i<array_utnorm.size();i++){
-            if(nome.compareTo(array_utnorm.get(i).getNome_utente())==0 && pass.compareTo(array_utnorm.get(i).getPassword())==0){
-                tipo="normale";
-            }
-        }
-        for(i=0;i<array_utadmin.size();i++) {
-            if (nome.compareTo(array_utadmin.get(i).getNome_utente()) == 0 && pass.compareTo(array_utadmin.get(i).getPassword()) == 0) {
-                tipo = "root";
-            }
-        }*/
         return tipo;
     }
     public ArrayList<Prodotti> searchProdotti(String cerca){
@@ -108,9 +110,9 @@ public class Utenti_Password implements Serializable{
         }
         return array;
     }
-    public Utente getUtente(){
+    /*public Utente getUtente(){
         return array_utnorm.get(0);
-    }
+    }*/
     public void addProdotto(Prodotti e){array_prodotti.add(e);}
     public ArrayList<Prodotti> getArray_prodotti() {
         return array_prodotti;

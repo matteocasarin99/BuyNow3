@@ -15,19 +15,19 @@ class Utente implements Serializable{
         email=mail;
     }
 
-    public String getNome_utente() {
+    public String getNome() {
         return nome_utente;
     }
 
-    public void setNome_utente(String nome_utente) {
+    public void setNome(String nome_utente) {
         this.nome_utente = nome_utente;
     }
 
-    public String getCognome_utente() {
+    public String getCognome() {
         return cognome_utente;
     }
 
-    public void setCognome_utente(String cognome_utente) {
+    public void setCognome(String cognome_utente) {
         this.cognome_utente = cognome_utente;
     }
 
