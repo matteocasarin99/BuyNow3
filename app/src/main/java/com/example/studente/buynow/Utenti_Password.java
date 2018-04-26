@@ -27,9 +27,9 @@ public class Utenti_Password implements Serializable{
         array_utadmin.add(new Utente("Admin","Stra","1234","admin@me.com"));
         array_utnorm.add(new Utente("Carlo","Albenga","sonogay","carlogay@icloud.com"));
         array_utnorm.add(new Utente("Alex","Pugnaghi","marcio","alex@icloud.com"));
-        array_prodotti.add(new Prodotti("Caffè","Caffè miscela arabica 100% naturale e biologico","Perù",12.42,0,4));
-        array_prodotti.add(new Prodotti("Cioccolata","Cioccolata al latte naturale e biologica","Brasile",2.42,0,20));
-        array_prodotti.add(new Prodotti("Tè Nero","Foglie di Tè Nero seccate al sole in bustina(4 per scatola)","India",5.50,0,6));
+        array_prodotti.add(new Prodotti("Caffè","Caffè miscela arabica 100% naturale e biologico","Perù",12.42,0,4,"aaaaa"));
+        array_prodotti.add(new Prodotti("Cioccolata","Cioccolata al latte naturale e biologica","Brasile",2.42,0,20,"aaaaa"));
+        array_prodotti.add(new Prodotti("Tè Nero","Foglie di Tè Nero seccate al sole in bustina(4 per scatola)","India",5.50,0,6,"aaaaaa"));
 
     }
     public boolean addnewUtente(Utente e){
@@ -37,7 +37,7 @@ public class Utenti_Password implements Serializable{
         try {
             System.out.println(e);
             URL url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=insert%20into%20utenti%20values('','"+e.getNome()+"','"+e.getPassword()+"','"+e.getCognome()+"','"+e.getEmail()+"');");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=insert&query=insert into utenti values(null,'"+e.getNome()+"','"+e.getPassword()+"','"+e.getCognome()+"','"+e.getEmail()+"');");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
             connection.setRequestMethod("GET");
@@ -45,14 +45,13 @@ public class Utenti_Password implements Serializable{
         }catch(Exception e2) {
             e2.printStackTrace();
         }
-        System.out.println("DIOCANE");
         return b;
     }
     public String search_utente(String nome, String password){
         String tipo="nessuno";
         try {
             URL url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=select%20*%20from%20utenti_admin");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=select&query=select%20*%20from%20utenti_admin");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
             connection.setRequestMethod("GET");
@@ -74,7 +73,7 @@ public class Utenti_Password implements Serializable{
                 }
             }
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=select%20*%20from%20utenti");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=select&query=select%20*%20from%20utenti");
             connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
             connection.setRequestMethod("GET");
@@ -114,7 +113,22 @@ public class Utenti_Password implements Serializable{
         return array;
     }
 
-    public void addProdotto(Prodotti e){array_prodotti.add(e);}
+    public boolean addProdotto(Prodotti e){
+        boolean b=false;
+        try {
+            System.out.println(e);
+            URL url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=insert&query=insert%20into%20prodotti%20values('','"+e.getNome()+"','"+e.getDescrizione()+"','"+e.getPrezzo()+"','"+e.getSconto()+"','"+e.getIngredienti()+"','"+e.getProvenienza()+"','"+e.getQuantitàDisp()+"');");
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+            connection.setRequestMethod("GET");
+            b=true;
+        }catch(Exception e2) {
+            e2.printStackTrace();
+        }
+        array_prodotti.add(e);
+        return b;
+    }
     public ArrayList<Prodotti> getArray_prodotti() {
         return array_prodotti;
     }

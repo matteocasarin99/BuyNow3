@@ -7,19 +7,20 @@ import java.io.Serializable;
  */
 
 public class Prodotti implements Serializable{
-    private String nome,descrizione,provenienza;
+    private String nome,descrizione,provenienza,ingredienti;
     private double prezzo;
     private double sconto;
     private int quantitàDisp;
 
 
-    public Prodotti(String nome, String descrizione, String provenienza, double prezzo, double sconto, int quantitàDisp) {
+    public Prodotti(String nome, String descrizione, String provenienza, double prezzo, double sconto, int quantitàDisp, String ingredienti) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.provenienza = provenienza;
         this.prezzo = prezzo;
         this.sconto = sconto;
         this.quantitàDisp = quantitàDisp;
+        this.ingredienti=ingredienti;
     }
 
     public String getNome() {
@@ -54,7 +55,7 @@ public class Prodotti implements Serializable{
         this.prezzo = prezzo;
     }
 
-    private double getSconto() {
+    public double getSconto() {
         return sconto;
     }
 
@@ -68,6 +69,14 @@ public class Prodotti implements Serializable{
 
     public void setQuantitàDisp(int quantitàDisp) {
         this.quantitàDisp = quantitàDisp;
+    }
+
+    public String getIngredienti() {
+        return ingredienti;
+    }
+
+    public void setIngredienti(String ingredienti) {
+        this.ingredienti = ingredienti;
     }
 
     @Override

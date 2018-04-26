@@ -14,7 +14,7 @@ import android.widget.ListView;
  */
 
 public class TabFragment1 extends Fragment{
-    private ArrayAdapter<Prodotti> adapter;
+    private AdapterJ adapter;
     public Utenti_Password ut;
     private ListView list;
     private View view;
@@ -29,7 +29,7 @@ public class TabFragment1 extends Fragment{
 
             list = view.findViewById(R.id.list);
             ut = Accedi_Act.ut;
-            adapter = new ArrayAdapter<Prodotti>(view.getContext(), android.R.layout.simple_list_item_1, ut.getArray_prodotti());
+            adapter = new AdapterJ(view.getContext(), ut.getArray_prodotti());
             list.setAdapter(adapter);
         }
             return view;

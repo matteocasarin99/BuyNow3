@@ -27,6 +27,7 @@ public class TabRoot1 extends Fragment{
         final EditText txtScon=view.findViewById(R.id.txtScon);
         final EditText txtProv=view.findViewById(R.id.txtProv);
         final EditText txtQuant=view.findViewById(R.id.txtQuant);
+        final EditText txtIngre=view.findViewById(R.id.txtIngre);
         Button btnAgg=view.findViewById(R.id.btnAgg);
         btnAgg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +39,7 @@ public class TabRoot1 extends Fragment{
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }else{
-                    ut.addProdotto(new Prodotti(nomeProd.getText().toString(),descProd.getText().toString(),txtProv.getText().toString(),Double.parseDouble(txtPrez.getText().toString()),Double.parseDouble(txtScon.getText().toString()),Integer.parseInt(txtQuant.getText().toString())));
+                    ut.addProdotto(new Prodotti(nomeProd.getText().toString(),descProd.getText().toString(),txtProv.getText().toString(),Double.parseDouble(txtPrez.getText().toString()),Double.parseDouble(txtScon.getText().toString()),Integer.parseInt(txtQuant.getText().toString()),txtIngre.getText().toString()));
                 }
             }
         });
