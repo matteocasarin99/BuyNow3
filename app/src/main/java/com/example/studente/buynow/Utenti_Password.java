@@ -39,8 +39,7 @@ public class Utenti_Password implements Serializable{
             URL url1 = new URL(
                     "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=insert&query=insert into utenti values(null,'"+e.getNome()+"','"+e.getPassword()+"','"+e.getCognome()+"','"+e.getEmail()+"');");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
-            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
-            connection.setRequestMethod("GET");
+            
             b=true;
         }catch(Exception e2) {
             e2.printStackTrace();
@@ -120,8 +119,7 @@ public class Utenti_Password implements Serializable{
             URL url1 = new URL(
                     "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=insert&query=insert%20into%20prodotti%20values('','"+e.getNome()+"','"+e.getDescrizione()+"','"+e.getPrezzo()+"','"+e.getSconto()+"','"+e.getIngredienti()+"','"+e.getProvenienza()+"','"+e.getQuantitàDisp()+"');");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
-            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
-            connection.setRequestMethod("GET");
+            
             b=true;
         }catch(Exception e2) {
             e2.printStackTrace();
