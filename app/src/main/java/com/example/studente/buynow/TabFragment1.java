@@ -29,7 +29,7 @@ public class TabFragment1 extends Fragment{
 
             list = view.findViewById(R.id.list);
             ut = Accedi_Act.ut;
-            adapter = new AdapterJ(view.getContext(), ut.getArray_prodotti());
+            adapter = new AdapterJ(view.getContext(), ut.getProdotti());
             list.setAdapter(adapter);
         }
             return view;

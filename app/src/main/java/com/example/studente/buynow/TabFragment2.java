@@ -30,7 +30,7 @@ public class TabFragment2 extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (textCerca.getText().toString().compareTo("")==0) {
-                    adapter = new AdapterJ(v.getContext(), ut.getArray_prodotti());
+                    adapter = new AdapterJ(v.getContext(), ut.getProdotti());
                 }else {
                     adapter = new AdapterJ(v.getContext(), ut.searchProdotti(textCerca.getText().toString()));
                 }

@@ -8,7 +8,14 @@ import java.io.Serializable;
 
 class Utente implements Serializable{
     private String nome_utente,cognome_utente,password,email;
+    private int idut;
     public Utente(String nome,String cognome,String pass,String mail){
+        nome_utente=nome;
+        cognome_utente=cognome;
+        password=pass;
+        email=mail;
+    }
+    public Utente(int idut,String nome,String cognome,String pass,String mail){
         nome_utente=nome;
         cognome_utente=cognome;
         password=pass;
