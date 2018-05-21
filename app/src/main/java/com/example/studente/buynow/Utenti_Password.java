@@ -176,7 +176,14 @@ public class Utenti_Password implements Serializable {
             URL url1 = new URL(
                     "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=insert&query=insert%20into%20prodotti%20values(null,'" + e.getNome() + "','" + e.getDescrizione() + "','" + e.getPrezzo() + "','" + e.getSconto() + "','" + e.getIngredienti() + "','" + e.getProvenienza() + "','" + e.getQuantitàDisp() + "');");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
-
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+            String s = response.toString();
+            System.out.println(s);
             b = true;
         } catch (Exception e2) {
             e2.printStackTrace();
@@ -217,7 +224,9 @@ public class Utenti_Password implements Serializable {
                 sconto = Double.parseDouble(obj.get("sconto").toString());
                 quantitàDisp = Integer.parseInt(obj.get("quantitàDisp").toString());
                 id = Integer.parseInt(obj.get("id_prod").toString());
-                array_prod.add(new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti));
+                Prodotti p=new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti);
+                System.out.println(p+"ID: "+id);
+                array_prod.add(p);
             }
             connection.disconnect();
         } catch (MalformedURLException e) {
