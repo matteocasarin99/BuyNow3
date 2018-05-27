@@ -222,7 +222,7 @@ public class Utenti_Password implements Serializable {
                 ingredienti = obj.get("ingredienti").toString();
                 prezzo = Double.parseDouble(obj.get("prezzo").toString());
                 sconto = Double.parseDouble(obj.get("sconto").toString());
-                quantitàDisp = Integer.parseInt(obj.get("quantitàDisp").toString());
+                quantitàDisp = Integer.parseInt(obj.get("quantitaDisp").toString());
                 id = Integer.parseInt(obj.get("id_prod").toString());
                 Prodotti p=new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti);
                 System.out.println(p+"ID: "+id);
