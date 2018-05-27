@@ -43,7 +43,7 @@ public class Utenti_Password implements Serializable {
         try {
             System.out.println(e);
             URL url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=insert&query=insert%20into%20utenti%20values(null,'" + e.getNome() + "','" + e.getPassword() + "','" + e.getCognome() + "','" + e.getEmail() + "');");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=insert%20into%20utenti%20values(null,'" + e.getNome() + "','" + e.getPassword() + "','" + e.getCognome() + "','" + e.getEmail() + "');");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             b = true;
         } catch (Exception e2) {
@@ -59,7 +59,7 @@ public class Utenti_Password implements Serializable {
             //UTENTI ROOT
             //DOWNLOAD JSON
             URL url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=select&query=select%20*%20from%20utenti_admin");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=select%20*%20from%20utenti_admin");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
             connection.setRequestMethod("GET");
@@ -84,7 +84,7 @@ public class Utenti_Password implements Serializable {
             //UTENTI NORMALI
             //DOWNLOAD JSON
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=select&query=select%20*%20from%20utenti");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=select%20*%20from%20utenti");
             connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
             connection.setRequestMethod("GET");
@@ -132,7 +132,7 @@ public class Utenti_Password implements Serializable {
         try {
             //DOWNLOAD JSON
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=select&query=select%20*%20from%20prodotti");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=select%20*%20from%20prodotti");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -174,7 +174,7 @@ public class Utenti_Password implements Serializable {
         try {
             System.out.println(e);
             URL url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=insert&query=insert%20into%20prodotti%20values(null,'" + e.getNome() + "','" + e.getDescrizione() + "','" + e.getPrezzo() + "','" + e.getSconto() + "','" + e.getIngredienti() + "','" + e.getProvenienza() + "','" + e.getQuantitàDisp() + "');");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=insert%20into%20prodotti%20values(null,'" + e.getNome() + "','" + e.getDescrizione() + "','" + e.getPrezzo() + "','" + e.getSconto() + "','" + e.getIngredienti() + "','" + e.getProvenienza() + "','" + e.getQuantitàDisp() + "');");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -196,7 +196,7 @@ public class Utenti_Password implements Serializable {
         URL url1 = null;
         try {
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?tipo=select&query=select%20*%20from%20prodotti");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20*%20from%20prodotti");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
