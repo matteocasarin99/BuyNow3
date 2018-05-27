@@ -34,22 +34,19 @@ public class MainActivity extends AppCompatActivity {
             accedi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (ut.getText().toString().compareTo("") == 0 || pass.getText().toString().compareTo("") == 0) {
-                        Context context = getApplicationContext();
-                        CharSequence text = "Compila i campi vuoti!!";
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                    } else {
-                        if (a.search_utente(ut.getText().toString(), pass.getText().toString()).compareTo("standard") == 0) {
-                            Intent i = new Intent(MainActivity.this, Accedi_Act.class);
-                            i.putExtra("Utenti",a);
-                            startActivity(i);
+                    if (InternetConnection.haveInternetConnection(getApplicationContext())) {
+                        if (ut.getText().toString().compareTo("") == 0 || pass.getText().toString().compareTo("") == 0) {
+                            Context context = getApplicationContext();
+                            CharSequence text = "Compila i campi vuoti!!";
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
                         } else {
-                            if (a.search_utente(ut.getText().toString(), pass.getText().toString()).compareTo("root") == 0) {
-                                Intent i2 = new Intent(MainActivity.this, Accedi_ActRoot.class);
-                                i2.putExtra("Utenti",a);
-                                startActivity(i2);
+                            if (a.search_utente(ut.getText().toString(), pass.getText().toString()).compareTo("nessuno") != 0) {
+                                Intent i = new Intent(MainActivity.this, Caricamento.class);
+                                i.putExtra("Utenti", a);
+                                i.putExtra("Act", a.search_utente(ut.getText().toString(), pass.getText().toString()));
+                                startActivity(i);
                             } else {
                                 Context context = getApplicationContext();
                                 CharSequence text = "Non hai un account!!";
@@ -57,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
                                 Toast toast = Toast.makeText(context, text, duration);
                                 toast.show();
                             }
+                        }
+                    } else {
+                        if (!InternetConnection.haveInternetConnection(getApplicationContext())) {
+                            Context context = getApplicationContext();
+                            CharSequence text = "Non Sei Connesso ad Internet!!";
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
                         }
                     }
 
