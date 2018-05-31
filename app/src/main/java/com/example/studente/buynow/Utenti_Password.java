@@ -238,4 +238,9 @@ public class Utenti_Password implements Serializable {
         }
         return array_prod;
     }
+    public ArrayList<Impostazioni> arraylist_settings() {
+        ArrayList<Impostazioni> arraylistString=new ArrayList<Impostazioni>();
+        arraylistString.add(new Impostazioni("Elimina account","Elimina l'account con cui si è connessi"));
+        return arraylistString;
+    }
 }

@@ -55,7 +55,7 @@ public class AdapterJ extends BaseAdapter {
         text.setText(data.get(i).getDescrizione());
         text2.setText(data.get(i).getNome());
         imgBio.setImageResource(R.drawable.icons8_cibo);
-        if(data.get(i).getNome().contains("Caffè")) {
+        if(data.get(i).getNome().contains("Caffe")) {
             img.setImageResource(R.drawable.icons8_coffe);
         }else {
             if (data.get(i).getNome().contains("Cioccolata")) {
@@ -64,10 +64,10 @@ public class AdapterJ extends BaseAdapter {
                 if (data.get(i).getNome().contains("Banane")) {
                     img.setImageResource(R.drawable.icons8_banana_24);
                 } else {
-                    if (data.get(i).getNome().contains("Tè")) {
+                    if (data.get(i).getNome().contains("Te")) {
                         img.setImageResource(R.drawable.icons8_tea24);
                     }else{
-                        if (data.get(i).getNome().contains("Bevanda")) {
+                        if (data.get(i).getNome().contains("Bibite")) {
                             img.setImageResource(R.drawable.icons8_acuqa);
                         }
                     }
