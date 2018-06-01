@@ -117,13 +117,58 @@ public class Utenti_Password implements Serializable {
     }
     //DA RIFARE!!
     public ArrayList<Prodotti> searchProdotti(String cerca) {
-        ArrayList<Prodotti> array = new ArrayList<>();
+        ArrayList<Prodotti> array_prod = new ArrayList<Prodotti>();
+        URL url1 = null;
+        try {
+            url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20*%20from%20prodotti%20where%20prodotti.nomeProd%20like%20'%"+cerca+"%'");
+
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+            String s = response.toString();
+            String nome, descrizione, provenienza, ingredienti;
+            double prezzo;
+            double sconto;
+            int quantitàDisp;
+            int id;
+            array = jreader.responseJson(s);
+            for (int j = 0; j < array.size(); j++) {
+                obj = (JSONObject) array.get(j);
+                nome = obj.get("nomeProd").toString();
+                descrizione = obj.get("descrizione").toString();
+                provenienza = obj.get("provenienza").toString();
+                ingredienti = obj.get("ingredienti").toString();
+                prezzo = Double.parseDouble(obj.get("prezzo").toString());
+                sconto = Double.parseDouble(obj.get("sconto").toString());
+                quantitàDisp = Integer.parseInt(obj.get("quantitaDisp").toString());
+                id = Integer.parseInt(obj.get("id_prod").toString());
+                Prodotti p=new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti);
+                System.out.println(p+"ID: "+id);
+                array_prod.add(p);
+            }
+            connection.disconnect();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return array_prod;
+        /*ArrayList<Prodotti> array = new ArrayList<>();
         int i;
         for (i = 0; i < array_prodotti.size(); i++)
             if (array_prodotti.get(i).toString().contains(cerca)) {
                 array.add(array_prodotti.get(i));
             }
-        return array;
+        return array;*/
     }
 
     public ArrayList<Utente> getUtenti() {
@@ -237,5 +282,10 @@ public class Utenti_Password implements Serializable {
             e.printStackTrace();
         }
         return array_prod;
+    }
+    public ArrayList<Impostazioni> arraylist_settings() {
+        ArrayList<Impostazioni> arraylistString=new ArrayList<Impostazioni>();
+        arraylistString.add(new Impostazioni("Elimina account","Elimina l'account con cui si è connessi"));
+        return arraylistString;
     }
 }
