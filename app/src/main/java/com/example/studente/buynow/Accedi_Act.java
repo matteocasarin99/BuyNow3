@@ -87,6 +87,7 @@ public class Accedi_Act extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settingsStand) {
             Intent i4=new Intent(Accedi_Act.this,AccountSettings.class);
+            i4.putExtra("Utenti",ut);
             startActivity(i4);
             return true;
         }
