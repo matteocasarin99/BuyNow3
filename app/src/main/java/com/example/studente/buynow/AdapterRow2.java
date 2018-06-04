@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class AdapterRow2 extends BaseAdapter{
     Context context;
-    ArrayList<String> data;
+    ArrayList<Impostazioni> data;
     private static LayoutInflater inflater = null;
-    public AdapterRow2 (Context context, ArrayList<String> data) {
+    public AdapterRow2 (Context context, ArrayList<Impostazioni> data) {
         // TODO Auto-generated constructor stub
         this.context = context;
         this.data = data;
@@ -26,17 +26,17 @@ public class AdapterRow2 extends BaseAdapter{
     }
     @Override
     public int getCount() {
-        return 0;
+        return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return data.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -47,7 +47,8 @@ public class AdapterRow2 extends BaseAdapter{
             vi = inflater.inflate(R.layout.rowsettings, null);
         TextView txtAzione=vi.findViewById(R.id.Action);
         TextView desc=vi.findViewById(R.id.Desc);
-        txtAzione.setText(data.get(i));
+        txtAzione.setText(data.get(i).getAzione());
+        desc.setText(data.get(i).getDescrizione());
         return vi;
     }
 }

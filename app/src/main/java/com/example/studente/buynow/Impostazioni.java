@@ -1,10 +1,12 @@
 package com.example.studente.buynow;
 
+import java.io.Serializable;
+
 /**
  * Created by studente on 31/05/2018.
  */
 
-public class Impostazioni {
+public class Impostazioni implements Serializable{
     private String azione,descrizione,queryAzione;
     public Impostazioni(String azione,String descrizione){
         this.azione=azione;
@@ -37,5 +39,10 @@ public class Impostazioni {
 
     public void setQueryAzione(String queryAzione) {
         this.queryAzione = queryAzione;
+    }
+
+    @Override
+    public String toString() {
+        return azione+"\n"+descrizione;
     }
 }

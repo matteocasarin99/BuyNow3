@@ -49,10 +49,4 @@ public class AdapterJUtente extends BaseAdapter {
         textEmail.setText(data.get(position).getEmail());
         return vi;
     }
-
-    @Nullable
-    @Override
-    public CharSequence[] getAutofillOptions() {
-        return new CharSequence[0];
-    }
 }

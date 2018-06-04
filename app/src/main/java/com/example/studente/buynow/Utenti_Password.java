@@ -1,5 +1,8 @@
 package com.example.studente.buynow;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -23,19 +26,15 @@ public class Utenti_Password implements Serializable {
     private static ArrayList<Utente> array_utnorm = new ArrayList<Utente>();
     private static ArrayList<Utente> array_utadmin = new ArrayList<Utente>();
     private static ArrayList<Prodotti> array_prodotti = new ArrayList<>();
+    ArrayList<Impostazioni> arraylistString=new ArrayList<Impostazioni>();
     JSONObject obj;
     JSONArray array = new JSONArray();
     JsonParse jreader = new JsonParse();
 
     public Utenti_Password() {
-        array_utadmin.add(new Utente("Matteo", "Casarin", "root", "sonyxperiazcasa@gmail.com"));
-        array_utadmin.add(new Utente("Admin", "Stra", "1234", "admin@me.com"));
-        array_utnorm.add(new Utente("Carlo", "Albenga", "sonogay", "carlogay@icloud.com"));
-        array_utnorm.add(new Utente("Alex", "Pugnaghi", "marcio", "alex@icloud.com"));
-        array_prodotti.add(new Prodotti("Caffè", "Caffè miscela arabica 100% naturale e biologico", "Perù", 12.42, 0, 4, "aaaaa"));
-        array_prodotti.add(new Prodotti("Cioccolata", "Cioccolata al latte naturale e biologica", "Brasile", 2.42, 0, 20, "aaaaa"));
-        array_prodotti.add(new Prodotti("Tè Nero", "Foglie di Tè Nero seccate al sole in bustina(4 per scatola)", "India", 5.50, 0, 6, "aaaaaa"));
-
+        arraylistString.add(new Impostazioni("Elimina account","Elimina l'account con cui si è connessi"));
+        arraylistString.add(new Impostazioni("Cambia password","Cambia la tua password di accesso"));
+        arraylistString.add(new Impostazioni("Logout","Esci dal tuo account"));
     }
 
     public boolean addnewUtente(Utente e) {
@@ -45,8 +44,17 @@ public class Utenti_Password implements Serializable {
             URL url1 = new URL(
                     "http://prova12344.altervista.org/ProgettoEsame/login.php?query=INSERT%20INTO%20`my_prova12344`.`utenti`%20(`id_utente`,%20`nome`,%20`password`,%20`cognome`,%20`email`)%20VALUES%20(NULL,%20'"+e.getNome()+"',%20'"+e.getPassword()+"',%20'"+e.getCognome()+"',%20'"+e.getEmail()+"');");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
-            b = true;
 
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+            String s = response.toString();
+            b=true;
+            System.out.println(s);
+            connection.disconnect();
         } catch (Exception e2) {
             e2.printStackTrace();
         }
@@ -171,7 +179,7 @@ public class Utenti_Password implements Serializable {
         try {
             //DOWNLOAD JSON
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=select%20*%20from%20prodotti");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=select%20*%20from%20utenti");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -224,7 +232,7 @@ public class Utenti_Password implements Serializable {
             String s = response.toString();
             System.out.println(s);
             b = true;
-
+            connection.disconnect();
         } catch (Exception e2) {
             e2.printStackTrace();
         }
@@ -279,12 +287,8 @@ public class Utenti_Password implements Serializable {
         return array_prod;
     }
     public ArrayList<Impostazioni> arraylist_settings() {
-        ArrayList<Impostazioni> arraylistString=new ArrayList<Impostazioni>();
-        arraylistString.add(new Impostazioni("Elimina account","Elimina l'account con cui si è connessi"));
+
+
         return arraylistString;
     }
-    public ArrayList<String> getString(){
-        ArrayList<String> arrayString=new ArrayList<String>();
-        arrayString.add("Elimina Account");
-    return arrayString;}
 }

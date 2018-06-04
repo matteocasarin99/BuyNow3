@@ -12,9 +12,8 @@ import android.widget.SimpleAdapter;
 import java.util.ArrayList;
 
 public class AccountSettings extends AppCompatActivity {
-    private AdapterJRow2 adapter;
+    private AdapterRow2 adapter;
     public Utenti_Password ut;
-    private View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -23,15 +22,27 @@ public class AccountSettings extends AppCompatActivity {
 
         ListView list=findViewById(R.id.listaa);
         ut = Accedi_Act.ut;
-        //adapter = new AdapterJRow2(getApplicationContext(),ut.getString());
-
+        adapter = new AdapterRow2(getApplicationContext(),ut.arraylist_settings());
+        //ArrayAdapter<Impostazioni> adapter;
+        //adapter = new ArrayAdapter<Impostazioni>(getApplicationContext(),R.layout.rowsettings,ut.arraylist_settings());
         list.setAdapter(adapter);
         list.setFocusable(true);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            }
+        });
+        list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem =(String) parent.getItemAtPosition(position).toString();
-                System.out.println(selectedItem);
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
