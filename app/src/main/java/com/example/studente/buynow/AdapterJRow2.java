@@ -14,18 +14,26 @@ import java.util.ArrayList;
 
 public class AdapterJRow2 extends BaseAdapter{
     Context context;
-    ArrayList<Impostazioni> data;
+    ArrayList<String> data;
+    ArrayList<Impostazioni> data2;
     private static LayoutInflater inflater = null;
-    public AdapterJRow2 (Context context, ArrayList<Impostazioni> data) {
+    public AdapterJRow2 (Context context, ArrayList<String> data) {
         // TODO Auto-generated constructor stub
         this.context = context;
         this.data = data;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+    /*public AdapterJRow2 (Context context, ArrayList<Impostazioni> data) {
+        // TODO Auto-generated constructor stub
+        this.context = context;
+        this.data = data;
+        inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }*/
     @Override
     public int getCount() {
-        return 0;
+        return data.size();
     }
 
     @Override
@@ -34,19 +42,19 @@ public class AdapterJRow2 extends BaseAdapter{
     }
 
     @Override
-    public long getItemId(int position) {
-        return 0;
+    public long getItemId(int i) {
+        return i;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup parent) {
         View vi=view;
         if (vi == null)
-            vi = inflater.inflate(R.layout.rowsettings, null);
-        TextView txtAzione=vi.findViewById(R.id.Action);
+            vi = inflater.inflate(android.R.layout.simple_list_item_1, null);
+        /*TextView txtAzione=vi.findViewById(R.id.Action);
         TextView desc=vi.findViewById(R.id.Desc);
         txtAzione.setText(data.get(i).getAzione());
-        desc.setText(data.get(i).getDescrizione());
+        desc.setText(data.get(i).getDescrizione());*/
         return vi;
     }
 }

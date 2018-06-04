@@ -55,6 +55,8 @@ public class Utenti_Password implements Serializable {
 
     public String search_utente(String nome, String password) {
         String tipo = "nessuno";
+        nome=nome.trim();
+        password=password.trim();
         try {
             //UTENTI ROOT
             //DOWNLOAD JSON
@@ -288,4 +290,8 @@ public class Utenti_Password implements Serializable {
         arraylistString.add(new Impostazioni("Elimina account","Elimina l'account con cui si è connessi"));
         return arraylistString;
     }
+    public ArrayList<String> getString(){
+        ArrayList<String> arrayString=new ArrayList<String>();
+        arrayString.add("Elimina Account");
+    return arrayString;}
 }
