@@ -27,7 +27,7 @@ public class TabRoot2 extends Fragment{
             StrictMode.setThreadPolicy(policy);
 
             list2 = view.findViewById(R.id.listr);
-            ut = Accedi_Act.ut;
+            ut = Accedi_ActRoot.ut;
             adapter = new AdapterJ(view.getContext(), ut.getProdotti());
             list2.setAdapter(adapter);
         }

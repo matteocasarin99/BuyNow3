@@ -43,9 +43,10 @@ public class Utenti_Password implements Serializable {
         try {
             System.out.println(e);
             URL url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=insert%20into%20utenti%20values(null,'" + e.getNome() + "','" + e.getPassword() + "','" + e.getCognome() + "','" + e.getEmail() + "');");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=INSERT%20INTO%20`my_prova12344`.`utenti`%20(`id_utente`,%20`nome`,%20`password`,%20`cognome`,%20`email`)%20VALUES%20(NULL,%20'"+e.getNome()+"',%20'"+e.getPassword()+"',%20'"+e.getCognome()+"',%20'"+e.getEmail()+"');");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             b = true;
+
         } catch (Exception e2) {
             e2.printStackTrace();
         }
@@ -83,6 +84,7 @@ public class Utenti_Password implements Serializable {
                     tipo = "root";
                 }
             }
+
             //UTENTI NORMALI
             //DOWNLOAD JSON
             url1 = new URL(
@@ -103,13 +105,11 @@ public class Utenti_Password implements Serializable {
                 obj = (JSONObject) array.get(j);
                 nm = obj.get("nome").toString();
                 pass = obj.get("password").toString();
-                System.out.println(nm);
                 if (nm.compareTo(nome) == 0 && pass.compareTo(password) == 0) {
                     tipo = "standard";
                 }
             }
-            System.out.println(tipo);
-            connection.disconnect();
+
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -152,10 +152,9 @@ public class Utenti_Password implements Serializable {
                 quantitàDisp = Integer.parseInt(obj.get("quantitaDisp").toString());
                 id = Integer.parseInt(obj.get("id_prod").toString());
                 Prodotti p=new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti);
-                System.out.println(p+"ID: "+id);
                 array_prod.add(p);
             }
-            connection.disconnect();
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
@@ -164,18 +163,11 @@ public class Utenti_Password implements Serializable {
             e.printStackTrace();
         }
         return array_prod;
-        /*ArrayList<Prodotti> array = new ArrayList<>();
-        int i;
-        for (i = 0; i < array_prodotti.size(); i++)
-            if (array_prodotti.get(i).toString().contains(cerca)) {
-                array.add(array_prodotti.get(i));
-            }
-        return array;*/
     }
 
     public ArrayList<Utente> getUtenti() {
         ArrayList<Utente> array_utenti = new ArrayList<Utente>();
-        URL url1 = null;
+        URL url1;
         try {
             //DOWNLOAD JSON
             url1 = new URL(
@@ -204,7 +196,7 @@ public class Utenti_Password implements Serializable {
                 id = Integer.parseInt(obj.get("id_utente").toString());
                 array_utenti.add(new Utente(id, nome, cognome, password, email));
             }
-            connection.disconnect();
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
@@ -220,8 +212,8 @@ public class Utenti_Password implements Serializable {
         boolean b = false;
         try {
             System.out.println(e);
-            URL url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=insert%20into%20prodotti%20values(null,'" + e.getNome() + "','" + e.getDescrizione() + "','" + e.getPrezzo() + "','" + e.getSconto() + "','" + e.getIngredienti() + "','" + e.getProvenienza() + "','" + e.getQuantitàDisp() + "');");
+           URL url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=INSERT%20INTO%20`my_prova12344`.`prodotti`%20(`id_prod`,%20`nomeProd`,%20`descrizione`,%20`prezzo`,%20`sconto`,%20`ingredienti`,%20`provenienza`,%20`quantitaDisp`)%20VALUES%20(NULL,%20'"+e.getNome()+"',%20'"+e.getDescrizione()+"',%20'"+e.getPrezzo()+"',%20'"+e.getSconto()+"',%20'"+e.getIngredienti()+"',%20'"+e.getProvenienza()+"',%20'"+e.getQuantitàDisp()+"')");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -232,6 +224,7 @@ public class Utenti_Password implements Serializable {
             String s = response.toString();
             System.out.println(s);
             b = true;
+
         } catch (Exception e2) {
             e2.printStackTrace();
         }
@@ -275,7 +268,7 @@ public class Utenti_Password implements Serializable {
                 System.out.println(p+"ID: "+id);
                 array_prod.add(p);
             }
-            connection.disconnect();
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
