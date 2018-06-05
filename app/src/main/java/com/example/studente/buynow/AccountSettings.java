@@ -1,5 +1,6 @@
 package com.example.studente.buynow;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +32,9 @@ public class AccountSettings extends AppCompatActivity {
                 }else{
                     if(ut.settings2().equals(parent.getItemAtPosition(position))){
                         System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+                        Intent i3=new Intent(AccountSettings.this,CambioPassword.class);
+                        i3.putExtra("Utenti",ut);
+                        startActivity(i3);
                     }else{
                         if(ut.settings3().equals(parent.getItemAtPosition(position))){
                             System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
