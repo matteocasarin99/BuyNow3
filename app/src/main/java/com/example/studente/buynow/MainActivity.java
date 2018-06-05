@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
                                 Intent i = new Intent(MainActivity.this, Caricamento.class);
                                 i.putExtra("Utenti", a);
                                 i.putExtra("Act", a.search_utente(ut.getText().toString(), pass.getText().toString()));
+                                i.putExtra("Id",Utenti_Password.id);
+                                System.out.println(Utenti_Password.id+"  AAAAAAAAAAAAAAAA");
                                 startActivity(i);
                             } else {
                                 Context context = getApplicationContext();

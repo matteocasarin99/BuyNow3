@@ -23,6 +23,7 @@ public class Accedi_Act extends AppCompatActivity {
     static Utenti_Password ut;
     public static  ListView list;
     public ArrayAdapter<Prodotti> adapter;
+    int idUt=0;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -50,7 +51,8 @@ public class Accedi_Act extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interfaccia);
         ut=(Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
-
+        idUt=(Integer)getIntent().getExtras().getSerializable("Id");
+        System.out.println(idUt+" AAAAAAAAAAAAAAAAAAAAAAAA");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -87,6 +89,7 @@ public class Accedi_Act extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settingsStand) {
             Intent i4=new Intent(Accedi_Act.this,AccountSettings.class);
+            i4.putExtra("Id",idUt);
             i4.putExtra("Utenti",ut);
             startActivity(i4);
             return true;

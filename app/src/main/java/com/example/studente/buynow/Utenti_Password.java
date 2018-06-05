@@ -26,6 +26,7 @@ public class Utenti_Password implements Serializable {
     private static ArrayList<Utente> array_utnorm = new ArrayList<Utente>();
     private static ArrayList<Utente> array_utadmin = new ArrayList<Utente>();
     private static ArrayList<Prodotti> array_prodotti = new ArrayList<>();
+    public static int id;
     ArrayList<Impostazioni> arraylistString=new ArrayList<Impostazioni>();
     JSONObject obj;
     JSONArray array = new JSONArray();
@@ -54,15 +55,12 @@ public class Utenti_Password implements Serializable {
             in.close();
             String s = response.toString();
             obj = jreader.responseJSonInsert(s);
-            //obj = (JSONObject) array.get(0);
             risposta=obj.get("azione").toString();
             if(risposta.compareTo("Comando Errato")==0){
                 b=false;
-            }else{
-                b=true;
+            }else {
+                b = true;
             }
-            //b=true;
-            System.out.println(s);
             connection.disconnect();
         } catch (Exception e2) {
             e2.printStackTrace();
@@ -91,12 +89,14 @@ public class Utenti_Password implements Serializable {
             in.close();
             String s = response.toString();
             //LETTURA DA JSON
+            String idS;
             String nm, pass;
             array = jreader.responseJson(s);
             for (int i = 0; i < array.size(); i++) {
                 obj = (JSONObject) array.get(i);
                 nm = obj.get("nome").toString();
                 pass = obj.get("password").toString();
+                id=Integer.parseInt(obj.get("id").toString());
                 if (nm.compareTo(nome) == 0 && pass.compareTo(password) == 0) {
                     tipo = "root";
                 }
@@ -120,8 +120,10 @@ public class Utenti_Password implements Serializable {
             array = jreader.responseJson(s);
             for (int j = 0; j < array.size(); j++) {
                 obj = (JSONObject) array.get(j);
+                System.out.println(obj.toJSONString());
                 nm = obj.get("nome").toString();
                 pass = obj.get("password").toString();
+                id=Integer.parseInt(obj.get("id_utente").toString());
                 if (nm.compareTo(nome) == 0 && pass.compareTo(password) == 0) {
                     tipo = "standard";
                 }
@@ -239,7 +241,6 @@ public class Utenti_Password implements Serializable {
                 response.append(inputLine);
             in.close();
             String s = response.toString();
-            System.out.println(s);
             b = true;
             connection.disconnect();
         } catch (Exception e2) {
@@ -282,7 +283,6 @@ public class Utenti_Password implements Serializable {
                 quantitàDisp = Integer.parseInt(obj.get("quantitaDisp").toString());
                 id = Integer.parseInt(obj.get("id_prod").toString());
                 Prodotti p=new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti);
-                System.out.println(p+"ID: "+id);
                 array_prod.add(p);
             }
 
@@ -313,7 +313,7 @@ public class Utenti_Password implements Serializable {
         try {
             String risposta="";
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20*%20from%20prodotti");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=update%20utenti%20set%20password='"+newPassword+"'%20where%20id_utente='"+id_utente+"';");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -325,15 +325,13 @@ public class Utenti_Password implements Serializable {
                 response.append(inputLine);
             in.close();
             String s = response.toString();
-            array = jreader.responseJson(s);
-            obj = (JSONObject) array.get(0);
+            obj = jreader.responseJSonInsert(s);
             risposta=obj.get("azione").toString();
             if(risposta.compareTo("Comando Errato")==0){
-                c=false;
-            }else{
-                c=true;
+                c = false;
+            }else {
+                c = true;
             }
-            System.out.println(s);
         } catch (ProtocolException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
