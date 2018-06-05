@@ -1,15 +1,10 @@
 package com.example.studente.buynow;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-
-import java.util.ArrayList;
 
 public class AccountSettings extends AppCompatActivity {
     private AdapterRow2 adapter;
@@ -23,14 +18,25 @@ public class AccountSettings extends AppCompatActivity {
         ListView list=findViewById(R.id.listaa);
         ut = Accedi_Act.ut;
         adapter = new AdapterRow2(getApplicationContext(),ut.arraylist_settings());
-        //ArrayAdapter<Impostazioni> adapter;
-        //adapter = new ArrayAdapter<Impostazioni>(getApplicationContext(),R.layout.rowsettings,ut.arraylist_settings());
         list.setAdapter(adapter);
         list.setFocusable(true);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            Impostazioni cancella=new Impostazioni("Elimina account","Elimina l'account con cui si è connessi");
+            Impostazioni cambia=new Impostazioni("Cambia password","Cambia la tua password di accesso");
+            Impostazioni esci=new Impostazioni("Logout","Esci dal tuo account");
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                if(ut.settings1().equals(parent.getItemAtPosition(position))) {
+                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                }else{
+                    if(ut.settings2().equals(parent.getItemAtPosition(position))){
+                        System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+                    }else{
+                        if(ut.settings3().equals(parent.getItemAtPosition(position))){
+                            System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+                        }
+                    }
+                }
             }
         });
         list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

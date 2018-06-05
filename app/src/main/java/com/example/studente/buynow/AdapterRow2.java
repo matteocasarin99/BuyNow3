@@ -42,13 +42,12 @@ public class AdapterRow2 extends BaseAdapter{
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         View vi=view;
-        int i=0;
         if (vi == null)
             vi = inflater.inflate(R.layout.rowsettings, null);
         TextView txtAzione=vi.findViewById(R.id.Action);
         TextView desc=vi.findViewById(R.id.Desc);
-        txtAzione.setText(data.get(i).getAzione());
-        desc.setText(data.get(i).getDescrizione());
+        txtAzione.setText(data.get(position).getAzione()+"");
+        desc.setText(data.get(position).getDescrizione()+"");
         return vi;
     }
 }

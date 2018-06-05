@@ -34,8 +34,13 @@
             android:label="@string/title_activity_accedi__act_root"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AccountSettings" android:screenOrientation="portrait"/>
-        <activity android:name=".Caricamento" android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".AccountSettings"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Caricamento"
+            android:screenOrientation="portrait" />
+        <activity android:name=".CambioPassword" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

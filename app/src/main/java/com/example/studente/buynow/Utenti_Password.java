@@ -287,8 +287,15 @@ public class Utenti_Password implements Serializable {
         return array_prod;
     }
     public ArrayList<Impostazioni> arraylist_settings() {
-
-
         return arraylistString;
+    }
+    public Impostazioni settings1() {
+        return arraylistString.get(0);
+    }
+    public Impostazioni settings2() {
+        return arraylistString.get(1);
+    }
+    public Impostazioni settings3() {
+        return arraylistString.get(2);
     }
 }
