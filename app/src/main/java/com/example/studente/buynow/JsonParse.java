@@ -22,4 +22,15 @@ public class JsonParse implements Serializable{
         }
         return array;
     }
+    public JSONObject responseJSonInsert(String response){
+        JSONObject obj=new JSONObject();
+        try {
+            JSONParser parser = new JSONParser();
+            Object object = parser.parse(response);
+           obj = (JSONObject) object;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
 }

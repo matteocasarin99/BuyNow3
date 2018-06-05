@@ -40,6 +40,7 @@ public class Utenti_Password implements Serializable {
     public boolean addnewUtente(Utente e) {
         boolean b = false;
         try {
+            String risposta="";
             System.out.println(e);
             URL url1 = new URL(
                     "http://prova12344.altervista.org/ProgettoEsame/login.php?query=INSERT%20INTO%20`my_prova12344`.`utenti`%20(`id_utente`,%20`nome`,%20`password`,%20`cognome`,%20`email`)%20VALUES%20(NULL,%20'"+e.getNome()+"',%20'"+e.getPassword()+"',%20'"+e.getCognome()+"',%20'"+e.getEmail()+"');");
@@ -52,7 +53,15 @@ public class Utenti_Password implements Serializable {
                 response.append(inputLine);
             in.close();
             String s = response.toString();
-            b=true;
+            obj = jreader.responseJSonInsert(s);
+            //obj = (JSONObject) array.get(0);
+            risposta=obj.get("azione").toString();
+            if(risposta.compareTo("Comando Errato")==0){
+                b=false;
+            }else{
+                b=true;
+            }
+            //b=true;
             System.out.println(s);
             connection.disconnect();
         } catch (Exception e2) {
@@ -297,5 +306,41 @@ public class Utenti_Password implements Serializable {
     }
     public Impostazioni settings3() {
         return arraylistString.get(2);
+    }
+    public boolean cambio_Password(String newPassword,int id_utente){
+        boolean c=false;
+        URL url1 = null;
+        try {
+            String risposta="";
+            url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20*%20from%20prodotti");
+
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+            String s = response.toString();
+            array = jreader.responseJson(s);
+            obj = (JSONObject) array.get(0);
+            risposta=obj.get("azione").toString();
+            if(risposta.compareTo("Comando Errato")==0){
+                c=false;
+            }else{
+                c=true;
+            }
+            System.out.println(s);
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return c;
     }
 }
