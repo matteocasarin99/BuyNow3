@@ -341,4 +341,9 @@ public class Utenti_Password implements Serializable {
         }
         return c;
     }
+
+
+    public String elimina(Prodotti prodotti) {
+        return "Done";
+    }
 }

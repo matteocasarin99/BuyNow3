@@ -1,11 +1,14 @@
 package com.example.studente.buynow;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 /**
@@ -27,9 +30,30 @@ public class TabRoot4 extends Fragment{
             StrictMode.setThreadPolicy(policy);
 
             list = view.findViewById(R.id.listelimina);
-            ut = Accedi_Act.ut;
-            adapter = new AdapterJElimina(view.getContext(), ut.getProdotti());
+            ut = new Utenti_Password();
+            adapter = new AdapterJElimina(view.getContext(), ut.getProdotti(),ut);
             list.setAdapter(adapter);
+            list.setFocusable(true);
+            Button elimina= view.findViewById(R.id.buttonelimina);
+            elimina.setFocusable(false);
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if(ut.settings1().equals(parent.getItemAtPosition(position))) {
+
+                        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    }else{
+                        if(ut.settings2().equals(parent.getItemAtPosition(position))){
+                            System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+                        }else{
+                            if(ut.settings3().equals(parent.getItemAtPosition(position))){
+                                System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+                            }
+                        }
+                    }
+                }
+            });
+
         }
         return view;
     }
