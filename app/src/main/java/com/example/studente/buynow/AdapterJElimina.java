@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ public class AdapterJElimina extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, final View view, ViewGroup viewGroup) {
         View vi = view;
         if (vi == null)
             vi = inflater.inflate(R.layout.rowelimina, null);
@@ -61,7 +62,13 @@ public class AdapterJElimina extends BaseAdapter {
         elimina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ut.elimina(data.get(i));
+                if(ut.elimina(data.get(i)).compareTo("Error")==0){
+                    Context context = view.getContext();
+                    CharSequence text = "ERROR DURING REGISTRATION";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         });
         return vi;

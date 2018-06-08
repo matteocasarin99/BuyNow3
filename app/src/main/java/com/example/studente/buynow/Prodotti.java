@@ -90,6 +90,14 @@ public class Prodotti implements Serializable{
         this.ingredienti = ingredienti;
     }
 
+    public int getId_prod() {
+        return id_prod;
+    }
+
+    public void setId_prod(int id_prod) {
+        this.id_prod = id_prod;
+    }
+
     @Override
     public String toString() {
         if(sconto==0){
