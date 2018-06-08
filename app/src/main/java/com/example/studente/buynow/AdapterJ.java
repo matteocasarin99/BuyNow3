@@ -44,16 +44,22 @@ public class AdapterJ extends BaseAdapter {
         View vi = view;
         if (vi == null)
             vi = inflater.inflate(R.layout.row, null);
+
         TextView text = vi.findViewById(R.id.text);
         TextView text2= vi.findViewById(R.id.textHeader);
         TextView textPrezlist=vi.findViewById(R.id.textPrezzoList);
         TextView textPrv=vi.findViewById(R.id.textProvenienza);
+        TextView textQt=vi.findViewById(R.id.textViewQt);
+
         ImageView img=vi.findViewById(R.id.imgMaterial);
         ImageView imgBio=vi.findViewById(R.id.imgBiologico);
-        textPrv.setText("Provenienza: "+data.get(i).getProvenienza());
 
+        textPrv.setText("Provenienza: "+data.get(i).getProvenienza());
         text.setText(data.get(i).getDescrizione());
         text2.setText(data.get(i).getNome());
+        textPrezlist.setText(data.get(i).getPrezzo()+"");
+        textQt.setText(data.get(i).getQuantitàDisp()+"");
+
         imgBio.setImageResource(R.drawable.icons8_cibo);
         if(data.get(i).getNome().contains("Caffe")) {
             img.setImageResource(R.drawable.icons8_coffe);
@@ -74,7 +80,8 @@ public class AdapterJ extends BaseAdapter {
                 }
             }
         }
-        textPrezlist.setText(data.get(i).getPrezzo()+"");
+
+
         return vi;
     }
 }
