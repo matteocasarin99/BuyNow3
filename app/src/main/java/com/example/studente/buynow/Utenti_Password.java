@@ -23,28 +23,29 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class Utenti_Password implements Serializable {
+    public static int id;
+    public static String password;
     private static ArrayList<Utente> array_utnorm = new ArrayList<Utente>();
     private static ArrayList<Utente> array_utadmin = new ArrayList<Utente>();
     private static ArrayList<Prodotti> array_prodotti = new ArrayList<>();
-    public static int id;
-    ArrayList<Impostazioni> arraylistString=new ArrayList<Impostazioni>();
+    ArrayList<Impostazioni> arraylistString = new ArrayList<Impostazioni>();
     JSONObject obj;
     JSONArray array = new JSONArray();
     JsonParse jreader = new JsonParse();
 
     public Utenti_Password() {
-        arraylistString.add(new Impostazioni("Elimina account","Elimina l'account con cui si è connessi"));
-        arraylistString.add(new Impostazioni("Cambia password","Cambia la tua password di accesso"));
-        arraylistString.add(new Impostazioni("Logout","Esci dal tuo account"));
+        arraylistString.add(new Impostazioni("Elimina account", "Elimina l'account con cui si è connessi"));
+        arraylistString.add(new Impostazioni("Cambia password", "Cambia la tua password di accesso"));
+        arraylistString.add(new Impostazioni("Logout", "Esci dal tuo account"));
     }
 
     public boolean addnewUtente(Utente e) {
         boolean b = false;
         try {
-            String risposta="";
+            String risposta = "";
             System.out.println(e);
             URL url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=INSERT%20INTO%20`my_prova12344`.`utenti`%20(`id_utente`,%20`nome`,%20`password`,%20`cognome`,%20`email`)%20VALUES%20(NULL,%20'"+e.getNome()+"',%20'"+e.getPassword()+"',%20'"+e.getCognome()+"',%20'"+e.getEmail()+"');");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=INSERT%20INTO%20`my_prova12344`.`utenti`%20(`id_utente`,%20`nome`,%20`password`,%20`cognome`,%20`email`)%20VALUES%20(NULL,%20'" + e.getNome() + "',%20'" + e.getPassword() + "',%20'" + e.getCognome() + "',%20'" + e.getEmail() + "');");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
 
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -55,10 +56,10 @@ public class Utenti_Password implements Serializable {
             in.close();
             String s = response.toString();
             obj = jreader.responseJSonInsert(s);
-            risposta=obj.get("azione").toString();
-            if(risposta.compareTo("Comando Errato")==0){
-                b=false;
-            }else {
+            risposta = obj.get("azione").toString();
+            if (risposta.compareTo("Comando Errato") == 0) {
+                b = false;
+            } else {
                 b = true;
             }
             connection.disconnect();
@@ -71,8 +72,8 @@ public class Utenti_Password implements Serializable {
 
     public String search_utente(String nome, String password) {
         String tipo = "nessuno";
-        nome=nome.trim();
-        password=password.trim();
+        nome = nome.trim();
+        password = password.trim();
         try {
             //UTENTI ROOT
             //DOWNLOAD JSON
@@ -96,9 +97,10 @@ public class Utenti_Password implements Serializable {
                 obj = (JSONObject) array.get(i);
                 nm = obj.get("nome").toString();
                 pass = obj.get("password").toString();
-                id=Integer.parseInt(obj.get("id").toString());
                 if (nm.compareTo(nome) == 0 && pass.compareTo(password) == 0) {
                     tipo = "root";
+                    id = Integer.parseInt(obj.get("id").toString());
+                    this.password = pass;
                 }
             }
 
@@ -123,9 +125,10 @@ public class Utenti_Password implements Serializable {
                 System.out.println(obj.toJSONString());
                 nm = obj.get("nome").toString();
                 pass = obj.get("password").toString();
-                id=Integer.parseInt(obj.get("id_utente").toString());
                 if (nm.compareTo(nome) == 0 && pass.compareTo(password) == 0) {
                     tipo = "standard";
+                    id = Integer.parseInt(obj.get("id_utente").toString());
+                    this.password = pass;
                 }
             }
 
@@ -136,13 +139,14 @@ public class Utenti_Password implements Serializable {
         }
         return tipo;
     }
+
     //DA RIFARE!!
     public ArrayList<Prodotti> searchProdotti(String cerca) {
         ArrayList<Prodotti> array_prod = new ArrayList<Prodotti>();
         URL url1 = null;
         try {
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20*%20from%20prodotti%20where%20prodotti.nomeProd%20like%20'%"+cerca+"%'");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20*%20from%20prodotti%20where%20prodotti.nomeProd%20like%20'%" + cerca + "%'");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -170,7 +174,7 @@ public class Utenti_Password implements Serializable {
                 sconto = Double.parseDouble(obj.get("sconto").toString());
                 quantitàDisp = Integer.parseInt(obj.get("quantitaDisp").toString());
                 id = Integer.parseInt(obj.get("id_prod").toString());
-                Prodotti p=new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti);
+                Prodotti p = new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti);
                 array_prod.add(p);
             }
 
@@ -231,8 +235,8 @@ public class Utenti_Password implements Serializable {
         boolean b = false;
         try {
             System.out.println(e);
-           URL url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=INSERT%20INTO%20`my_prova12344`.`prodotti`%20(`id_prod`,%20`nomeProd`,%20`descrizione`,%20`prezzo`,%20`sconto`,%20`ingredienti`,%20`provenienza`,%20`quantitaDisp`)%20VALUES%20(NULL,%20'"+e.getNome()+"',%20'"+e.getDescrizione()+"',%20'"+e.getPrezzo()+"',%20'"+e.getSconto()+"',%20'"+e.getIngredienti()+"',%20'"+e.getProvenienza()+"',%20'"+e.getQuantitàDisp()+"')");
+            URL url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?query=INSERT%20INTO%20`my_prova12344`.`prodotti`%20(`id_prod`,%20`nomeProd`,%20`descrizione`,%20`prezzo`,%20`sconto`,%20`ingredienti`,%20`provenienza`,%20`quantitaDisp`)%20VALUES%20(NULL,%20'" + e.getNome() + "',%20'" + e.getDescrizione() + "',%20'" + e.getPrezzo() + "',%20'" + e.getSconto() + "',%20'" + e.getIngredienti() + "',%20'" + e.getProvenienza() + "',%20'" + e.getQuantitàDisp() + "')");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -282,7 +286,7 @@ public class Utenti_Password implements Serializable {
                 sconto = Double.parseDouble(obj.get("sconto").toString());
                 quantitàDisp = Integer.parseInt(obj.get("quantitaDisp").toString());
                 id = Integer.parseInt(obj.get("id_prod").toString());
-                Prodotti p=new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti);
+                Prodotti p = new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti);
                 array_prod.add(p);
             }
 
@@ -295,25 +299,30 @@ public class Utenti_Password implements Serializable {
         }
         return array_prod;
     }
+
     public ArrayList<Impostazioni> arraylist_settings() {
         return arraylistString;
     }
+
     public Impostazioni settings1() {
         return arraylistString.get(0);
     }
+
     public Impostazioni settings2() {
         return arraylistString.get(1);
     }
+
     public Impostazioni settings3() {
         return arraylistString.get(2);
     }
-    public boolean cambio_Password(String newPassword,int id_utente){
-        boolean c=false;
+
+    public boolean cambio_Password(String newPassword, int id_utente) {
+        boolean c = false;
         URL url1 = null;
         try {
-            String risposta="";
+            String risposta = "";
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=update%20utenti%20set%20password='"+newPassword+"'%20where%20id_utente='"+id_utente+"';");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=update%20utenti%20set%20password='" + newPassword + "'%20where%20id_utente='" + id_utente + "';");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -326,10 +335,10 @@ public class Utenti_Password implements Serializable {
             in.close();
             String s = response.toString();
             obj = jreader.responseJSonInsert(s);
-            risposta=obj.get("azione").toString();
-            if(risposta.compareTo("Comando Errato")==0){
+            risposta = obj.get("azione").toString();
+            if (risposta.compareTo("Comando Errato") == 0) {
                 c = false;
-            }else {
+            } else {
                 c = true;
             }
         } catch (ProtocolException e) {
@@ -344,12 +353,12 @@ public class Utenti_Password implements Serializable {
 
 
     public String elimina(Prodotti prodotti) {
-        boolean c=false;
+        boolean c = false;
         URL url1 = null;
         try {
-            String risposta="";
+            String risposta = "";
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=delete%20from%20prodotti%where%20id_prod='"+prodotti.getId_prod()+"';");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=delete%20from%20prodotti%where%20id_prod='" + prodotti.getId_prod() + "';");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -362,10 +371,10 @@ public class Utenti_Password implements Serializable {
             in.close();
             String s = response.toString();
             obj = jreader.responseJSonInsert(s);
-            risposta=obj.get("azione").toString();
-            if(risposta.compareTo("Comando Errato")==0){
+            risposta = obj.get("azione").toString();
+            if (risposta.compareTo("Comando Errato") == 0) {
                 c = false;
-            }else {
+            } else {
                 c = true;
             }
         } catch (ProtocolException e) {
@@ -375,9 +384,9 @@ public class Utenti_Password implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(c){
+        if (c) {
             return "Done";
-        }else{
+        } else {
             return "Error";
         }
 

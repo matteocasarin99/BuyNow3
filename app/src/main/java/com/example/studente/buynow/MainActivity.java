@@ -11,7 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    Utenti_Password a=new Utenti_Password();
+    Utenti_Password a = new Utenti_Password();
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -19,15 +20,11 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            //your codes here
-
-
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-        if(getIntent().getExtras()!=null){
-            a=(Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
-        }
-
+            if (getIntent().getExtras() != null) {
+                a = (Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
+            }
             Button accedi = (Button) findViewById(R.id.accedi);
             final EditText ut = findViewById(R.id.utente);
             final EditText pass = findViewById(R.id.password);
@@ -46,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
                                 Intent i = new Intent(MainActivity.this, Caricamento.class);
                                 i.putExtra("Utenti", a);
                                 i.putExtra("Act", a.search_utente(ut.getText().toString(), pass.getText().toString()));
-                                i.putExtra("Id",Utenti_Password.id);
-                                System.out.println(Utenti_Password.id+"  AAAAAAAAAAAAAAAA");
+                                i.putExtra("Id", Utenti_Password.id);
+                                i.putExtra("Password", Utenti_Password.password);
                                 startActivity(i);
                             } else {
                                 Context context = getApplicationContext();
@@ -70,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        Button registrati=(Button) findViewById(R.id.btnReg);
+        Button registrati = (Button) findViewById(R.id.btnReg);
         registrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i2=new Intent(MainActivity.this,Reg_Act.class);
-                i2.putExtra("Utenti",a);
+                Intent i2 = new Intent(MainActivity.this, Reg_Act.class);
+                i2.putExtra("Utenti", a);
                 startActivity(i2);
             }
         });
@@ -83,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public void onSaveInstanceState(Bundle outState){
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("Utenti",a);
+        outState.putSerializable("Utenti", a);
     }
 
 }
