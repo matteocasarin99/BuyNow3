@@ -39,22 +39,39 @@ public class AccountSettings extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long i) {
                 if (ut.settings1().equals(parent.getItemAtPosition(position))) {
-                    AlertDialog.Builder miaAlert = new AlertDialog.Builder(getApplication());
+                    AlertDialog.Builder miaAlert = new AlertDialog.Builder(AccountSettings.this);
                     miaAlert.setMessage("Eliminare l'account?");
                     miaAlert.setTitle("Attenzione!");
 
                     miaAlert.setCancelable(false);
-                    miaAlert.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    miaAlert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                           System.out.println("QUI SI");
+
+                        }
+                    });
+                    miaAlert.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            System.out.println(ut.eliminaUt(idUt));
+                           if(ut.eliminaUt(idUt).compareTo("Error")==0){
+                               Context context = getApplicationContext();
+                               CharSequence text = "Error During Delete";
+                               int duration = Toast.LENGTH_SHORT;
+                               Toast toast = Toast.makeText(context, text, duration);
+                               toast.show();
+                               new Handler().postDelayed(new Runnable() {
+                                   @Override
+                                   public void run() {
+                                       Intent i=new Intent(AccountSettings.this,MainActivity.class);
+                                       i.putExtra("Utenti",ut);
+                                       startActivity(i);
+                                       finish();
+                                   }
+                               }, 1000);
+                           }
                         }
                     });
 
-                    miaAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            System.out.println("QUI NO");
-                        }
-                    });
+
 
                     AlertDialog alert = miaAlert.create();
                     alert.show();
