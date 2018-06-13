@@ -98,13 +98,18 @@ public class Prodotti implements Serializable{
         this.id_prod = id_prod;
     }
 
+
     @Override
     public String toString() {
-        if(sconto==0){
-            return "" + nome + ", Prezzo=" + prezzo +", Provenienza="+provenienza+ ", Quantità Disponibile=" + quantitàDisp;
-        }else{
-            return "" + nome + ", Prezzo=" + prezzo +", Provenienza="+provenienza+ ", Sconto="+sconto+ ", Quantità Disponibile=" + quantitàDisp;
-        }
-
+        return "Prodotti{" +
+                "nome='" + nome + '\'' +
+                ", descrizione='" + descrizione + '\'' +
+                ", provenienza='" + provenienza + '\'' +
+                ", ingredienti='" + ingredienti + '\'' +
+                ", prezzo=" + prezzo +
+                ", sconto=" + sconto +
+                ", quantitàDisp=" + quantitàDisp +
+                ", id_prod=" + id_prod +
+                '}';
     }
 }

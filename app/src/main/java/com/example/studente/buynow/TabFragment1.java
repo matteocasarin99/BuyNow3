@@ -1,11 +1,14 @@
 package com.example.studente.buynow;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -31,6 +34,22 @@ public class TabFragment1 extends Fragment{
             ut = Accedi_Act.ut;
             adapter = new AdapterJ(view.getContext(), ut.getProdotti());
             list.setAdapter(adapter);
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    final Prodotti p=(Prodotti)parent.getItemAtPosition(position);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent i=new Intent(getActivity(),ActProdotto.class);
+                            i.putExtra("Utenti",ut);
+                            i.putExtra("Prodotto",p);
+                            startActivity(i);
+                            getActivity().finish();
+                        }
+                    }, 500);
+                }
+            });
         }
             return view;
 

@@ -85,20 +85,38 @@ public class AccountSettings extends AppCompatActivity {
 
                     } else {
                         if (ut.settings3().equals(parent.getItemAtPosition(position))) {
-                            Context context = getApplicationContext();
-                            CharSequence text = "Logout In Corso...";
-                            int duration = Toast.LENGTH_SHORT;
-                            Toast toast = Toast.makeText(context, text, duration);
-                            toast.show();
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent i=new Intent(AccountSettings.this,MainActivity.class);
-                                    i.putExtra("Utenti",ut);
-                                    startActivity(i);
-                                    finish();
+                            System.out.println("QUIIIIIIIIIIII");
+                            AlertDialog.Builder miaAlert2 = new AlertDialog.Builder(AccountSettings.this);
+                            miaAlert2.setMessage("Uscire dall'account?");
+                            miaAlert2.setTitle("Information");
+
+                            miaAlert2.setCancelable(false);
+                            miaAlert2.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
                                 }
-                            }, 1500);
+                            });
+                            miaAlert2.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                        Context context = getApplicationContext();
+                                        CharSequence text = "Logout In Corso...";
+                                        int duration = Toast.LENGTH_SHORT;
+                                        Toast toast = Toast.makeText(context, text, duration);
+                                        toast.show();
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Intent i=new Intent(AccountSettings.this,MainActivity.class);
+                                                i.putExtra("Utenti",ut);
+                                                startActivity(i);
+                                                finish();
+                                            }
+                                        }, 1000);
+                                    }
+
+                            });
+                            AlertDialog alert = miaAlert2.create();
+                            alert.show();
                         }
                     }
                 }
