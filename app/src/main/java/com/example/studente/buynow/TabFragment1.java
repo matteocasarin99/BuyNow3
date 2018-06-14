@@ -21,6 +21,7 @@ public class TabFragment1 extends Fragment{
     public Utenti_Password ut;
     private ListView list;
     private View view;
+    int idUt;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab1, container, false);
@@ -29,14 +30,14 @@ public class TabFragment1 extends Fragment{
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-
+            idUt =Accedi_Act.idUt;
             list = view.findViewById(R.id.list);
             ut = Accedi_Act.ut;
             adapter = new AdapterJ(view.getContext(), ut.getProdotti());
             list.setAdapter(adapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                public void onItemClick(AdapterView<?> parent, View view, int position, final long id) {
                     final Prodotti p=(Prodotti)parent.getItemAtPosition(position);
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -44,6 +45,7 @@ public class TabFragment1 extends Fragment{
                             Intent i=new Intent(getActivity(),ActProdotto.class);
                             i.putExtra("Utenti",ut);
                             i.putExtra("Prodotto",p);
+                            i.putExtra("IdUt",idUt);
                             startActivity(i);
                             getActivity().finish();
                         }

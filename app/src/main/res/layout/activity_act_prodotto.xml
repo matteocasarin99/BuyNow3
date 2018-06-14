@@ -65,7 +65,7 @@
     <TextView
         android:id="@+id/descrProd"
         android:layout_width="128dp"
-        android:layout_height="58dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="68dp"
         android:text="TextView"
@@ -79,9 +79,9 @@
     <TextView
         android:id="@+id/ingrprod"
         android:layout_width="128dp"
-        android:layout_height="58dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="80dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -117,7 +117,7 @@
         android:id="@+id/spinner"
         android:layout_width="92dp"
         android:layout_height="20dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="56dp"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/textView29"
@@ -136,5 +136,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descrProd"
-        app:layout_constraintVertical_bias="0.338" />
+        app:layout_constraintVertical_bias="0.155" />
+
+    <Button
+        android:id="@+id/btnAddCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:text="Aggiungi al carrello"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView29"
+        app:layout_constraintVertical_bias="0.102" />
 </android.support.constraint.ConstraintLayout>

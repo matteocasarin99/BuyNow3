@@ -73,7 +73,7 @@ public class AdapterJ extends BaseAdapter {
                     if (data.get(i).getNome().contains("Te")) {
                         img.setImageResource(R.drawable.icons8_tea24);
                     }else{
-                        if (data.get(i).getNome().contains("Bevanda")||data.get(i).getNome().contains("Bibite")) {
+                        if (data.get(i).getNome().contains("Bevanda")|| data.get(i).getNome().contains("Bibite")) {
                             img.setImageResource(R.drawable.icons8_acuqa);
                         }
                     }

@@ -429,6 +429,19 @@ public class Utenti_Password implements Serializable {
         } else {
             return "Error";
         }
+    }
 
+    public ArrayList<Prodotti> getCarrello(int idutente){
+        ArrayList<Prodotti> arraypr=new ArrayList<Prodotti>();
+
+        return arraypr;
+    }
+    public String addToCart(Prodotti p,int idutente){
+        boolean c=false;
+        if (c) {
+            return "Done";
+        } else {
+            return "Error";
+        }
     }
 }

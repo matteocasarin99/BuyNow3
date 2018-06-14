@@ -23,7 +23,7 @@ public class Accedi_Act extends AppCompatActivity {
     public static ListView list;
     static Utenti_Password ut;
     public ArrayAdapter<Prodotti> adapter;
-    int idUt = 0;
+    static int idUt = 0;
     String password;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
