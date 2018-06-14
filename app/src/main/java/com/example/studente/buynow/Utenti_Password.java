@@ -433,11 +433,85 @@ public class Utenti_Password implements Serializable {
 
     public ArrayList<Prodotti> getCarrello(int idutente){
         ArrayList<Prodotti> arraypr=new ArrayList<Prodotti>();
+        URL url1 = null;
+        try {
+            String risposta = "";
+            url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20prodotti.nomeProd,prodotti.descrizione,prodotti.ingredienti,prodotti.prezzo,prodotti.sconto,prodotti.id_prod,prodotti.provenienza,carrelli.quantitaOrd%20from%20prodotti,carrelli%20where%20carrelli.fk_idutente="+idutente+"%20and%20prodotti.id_prod=carrelli.fk_idprodotto");
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+            String s = response.toString();
+            System.out.println(s);
+            String nome, descrizione, provenienza, ingredienti;
+            double prezzo;
+            double sconto;
+            int quantitàDisp;
+            int id;
+            int quantitaOrd;
+            array = jreader.responseJson(s);
+            for (int j = 0; j < array.size(); j++) {
+                obj = (JSONObject) array.get(j);
+                nome = obj.get("nomeProd").toString();
+                descrizione = obj.get("descrizione").toString();
+                provenienza = obj.get("provenienza").toString();
+                ingredienti = obj.get("ingredienti").toString();
+                prezzo = Double.parseDouble(obj.get("prezzo").toString());
+                sconto = Double.parseDouble(obj.get("sconto").toString());
+                id = Integer.parseInt(obj.get("id_prod").toString());
+                quantitaOrd=Integer.parseInt(obj.get("quantitaOrd").toString());
+                Prodotti p = new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitaOrd, ingredienti);
+                arraypr.add(p);
+            }
 
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return arraypr;
     }
     public String addToCart(Prodotti p,int idutente){
         boolean c=false;
+        URL url1 = null;
+        try {
+            String risposta = "";
+            url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=");
+
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+            String s = response.toString();
+            obj = jreader.responseJSonInsert(s);
+            risposta = obj.get("azione").toString();
+            System.out.println(risposta);
+            if (risposta.compareTo("Comando Errato") == 0) {
+                c = false;
+            } else {
+                c = true;
+            }
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (c) {
             return "Done";
         } else {
