@@ -26,7 +26,7 @@ public class TabRoot1 extends Fragment{
         final EditText txtPrez=view.findViewById(R.id.txtPrez);
         final EditText txtScon=view.findViewById(R.id.txtScon);
         final EditText txtProv=view.findViewById(R.id.txtProv);
-        final EditText txtQuant=view.findViewById(R.id.txtQuant);
+        final EditText txtQuant = view.findViewById(R.id.QuantProd);
         final EditText txtIngre=view.findViewById(R.id.txtIngre);
         Button btnAgg=view.findViewById(R.id.btnAgg);
         btnAgg.setOnClickListener(new View.OnClickListener() {

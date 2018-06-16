@@ -1,11 +1,14 @@
 package com.example.studente.buynow;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 /**
@@ -31,6 +34,23 @@ public class TabFragment3 extends Fragment {
             ut = Accedi_Act.ut;
             adapter = new AdapterJ(view.getContext(), ut.getCarrello(idUt));
             list.setAdapter(adapter);
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, final long id) {
+                    final Prodotti p = (Prodotti) parent.getItemAtPosition(position);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent i = new Intent(getActivity(), ActProdottoCarrello.class);
+                            i.putExtra("Utenti", ut);
+                            i.putExtra("Prodotto", p);
+                            i.putExtra("IdUt", idUt);
+                            startActivity(i);
+                            getActivity().finish();
+                        }
+                    }, 500);
+                }
+            });
         }
         return view;
     }

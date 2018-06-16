@@ -28,10 +28,10 @@ public class Utenti_Password implements Serializable {
     private static ArrayList<Utente> array_utnorm = new ArrayList<Utente>();
     private static ArrayList<Utente> array_utadmin = new ArrayList<Utente>();
     private static ArrayList<Prodotti> array_prodotti = new ArrayList<>();
-    ArrayList<Impostazioni> arraylistString = new ArrayList<Impostazioni>();
-    JSONObject obj;
-    JSONArray array = new JSONArray();
-    JsonParse jreader = new JsonParse();
+    private ArrayList<Impostazioni> arraylistString = new ArrayList<Impostazioni>();
+    private JSONObject obj;
+    private JSONArray array = new JSONArray();
+    private JsonParse jreader = new JsonParse();
 
     public Utenti_Password() {
         arraylistString.add(new Impostazioni("Elimina account", "Elimina l'account con cui si è connessi"));
@@ -57,11 +57,7 @@ public class Utenti_Password implements Serializable {
             String s = response.toString();
             obj = jreader.responseJSonInsert(s);
             risposta = obj.get("azione").toString();
-            if (risposta.compareTo("Comando Errato") == 0) {
-                b = false;
-            } else {
-                b = true;
-            }
+            b = risposta.compareTo("Comando Errato") != 0;
             connection.disconnect();
         } catch (Exception e2) {
             e2.printStackTrace();
@@ -75,8 +71,8 @@ public class Utenti_Password implements Serializable {
         nome = nome.trim();
         password = password.trim();
         try {
-            //UTENTI ROOT
-            //DOWNLOAD JSON
+            //QUERY UTENTI ROOT
+            //DOWNLOAD JSON DI RISPOSTA DA FILE PHP
             URL url1 = new URL(
                     "http://prova12344.altervista.org/ProgettoEsame/login.php?query=select%20*%20from%20utenti_admin");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
@@ -89,7 +85,7 @@ public class Utenti_Password implements Serializable {
                 response.append(inputLine);
             in.close();
             String s = response.toString();
-            //LETTURA DA JSON
+            //LETTURA ELENCO UTENTI DA RISPOSTA JSON
             String idS;
             String nm, pass;
             array = jreader.responseJson(s);
@@ -161,7 +157,7 @@ public class Utenti_Password implements Serializable {
             String nome, descrizione, provenienza, ingredienti;
             double prezzo;
             double sconto;
-            int quantitàDisp;
+            int quantitaDisp;
             int id;
             array = jreader.responseJson(s);
             for (int j = 0; j < array.size(); j++) {
@@ -172,17 +168,13 @@ public class Utenti_Password implements Serializable {
                 ingredienti = obj.get("ingredienti").toString();
                 prezzo = Double.parseDouble(obj.get("prezzo").toString());
                 sconto = Double.parseDouble(obj.get("sconto").toString());
-                quantitàDisp = Integer.parseInt(obj.get("quantitaDisp").toString());
+                quantitaDisp = Integer.parseInt(obj.get("quantitaDisp").toString());
                 id = Integer.parseInt(obj.get("id_prod").toString());
-                Prodotti p = new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti);
+                Prodotti p = new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitaDisp, ingredienti);
                 array_prod.add(p);
             }
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return array_prod;
@@ -220,11 +212,7 @@ public class Utenti_Password implements Serializable {
                 array_utenti.add(new Utente(id, nome, cognome, password, email));
             }
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -273,7 +261,7 @@ public class Utenti_Password implements Serializable {
             String nome, descrizione, provenienza, ingredienti;
             double prezzo;
             double sconto;
-            int quantitàDisp;
+            int quantitaDisp;
             int id;
             array = jreader.responseJson(s);
             for (int j = 0; j < array.size(); j++) {
@@ -284,17 +272,13 @@ public class Utenti_Password implements Serializable {
                 ingredienti = obj.get("ingredienti").toString();
                 prezzo = Double.parseDouble(obj.get("prezzo").toString());
                 sconto = Double.parseDouble(obj.get("sconto").toString());
-                quantitàDisp = Integer.parseInt(obj.get("quantitaDisp").toString());
+                quantitaDisp = Integer.parseInt(obj.get("quantitaDisp").toString());
                 id = Integer.parseInt(obj.get("id_prod").toString());
-                Prodotti p = new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitàDisp, ingredienti);
+                Prodotti p = new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitaDisp, ingredienti);
                 array_prod.add(p);
             }
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return array_prod;
@@ -336,16 +320,8 @@ public class Utenti_Password implements Serializable {
             String s = response.toString();
             obj = jreader.responseJSonInsert(s);
             risposta = obj.get("azione").toString();
-            if (risposta.compareTo("Comando Errato") == 0) {
-                c = false;
-            } else {
-                c = true;
-            }
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            c = risposta.compareTo("Comando Errato") != 0;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return c;
@@ -372,23 +348,11 @@ public class Utenti_Password implements Serializable {
             String s = response.toString();
             obj = jreader.responseJSonInsert(s);
             risposta = obj.get("azione").toString();
-            if (risposta.compareTo("Comando Errato") == 0) {
-                c = false;
-            } else {
-                c = true;
-            }
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            c = risposta.compareTo("Comando Errato") != 0;
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if (c) {
-            return "Done";
-        } else {
-            return "Error";
-        }
+        return c ? "Done" : "Error";
 
     }
     public String eliminaUt(int idUt) {
@@ -412,23 +376,11 @@ public class Utenti_Password implements Serializable {
             obj = jreader.responseJSonInsert(s);
             risposta = obj.get("azione").toString();
             System.out.println(risposta);
-            if (risposta.compareTo("Comando Errato") == 0) {
-                c = false;
-            } else {
-                c = true;
-            }
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            c = risposta.compareTo("Comando Errato") != 0;
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if (c) {
-            return "Done";
-        } else {
-            return "Error";
-        }
+        return c ? "Done" : "Error";
     }
 
     public ArrayList<Prodotti> getCarrello(int idutente){
@@ -452,7 +404,6 @@ public class Utenti_Password implements Serializable {
             String nome, descrizione, provenienza, ingredienti;
             double prezzo;
             double sconto;
-            int quantitàDisp;
             int id;
             int quantitaOrd;
             array = jreader.responseJson(s);
@@ -470,11 +421,7 @@ public class Utenti_Password implements Serializable {
                 arraypr.add(p);
             }
 
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return arraypr;
@@ -500,22 +447,10 @@ public class Utenti_Password implements Serializable {
             obj = jreader.responseJSonInsert(s);
             risposta = obj.get("azione").toString();
             System.out.println(risposta);
-            if (risposta.compareTo("Comando Errato") == 0) {
-                c = false;
-            } else {
-                c = true;
-            }
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            c = risposta.compareTo("Comando Errato") != 0;
+        } catch (Exception e2) {
+            e2.printStackTrace();
         }
-        if (c) {
-            return "Done";
-        } else {
-            return "Error";
-        }
+        return c ? "Done" : "Error";
     }
 }
