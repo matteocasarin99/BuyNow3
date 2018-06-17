@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 /**
@@ -30,6 +31,12 @@ public class TabRoot2 extends Fragment{
             ut = Accedi_ActRoot.ut;
             adapter = new AdapterJ(view.getContext(), ut.getProdotti());
             list2.setAdapter(adapter);
+            list2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                }
+            });
         }
         return view;
     }

@@ -43,7 +43,8 @@
         <activity
             android:name=".CambioPassword"
             android:screenOrientation="portrait" />
-        <activity android:name=".ActProdotto"></activity>
+        <activity android:name=".ActProdotto" />
+        <activity android:name=".ActModifica"></activity>
     </application>
 
 </manifest>

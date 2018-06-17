@@ -332,9 +332,10 @@ public class Utenti_Password implements Serializable {
         boolean c = false;
         URL url1 = null;
         try {
+            System.out.println(prodotti);
             String risposta = "";
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=delete%20from%20prodotti%where%20id_prod='" + prodotti.getId_prod() + "';");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=delete%20from%20`prodotti`%20where%20id_prod='" + prodotti.getId_prod() + "';");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -348,6 +349,7 @@ public class Utenti_Password implements Serializable {
             String s = response.toString();
             obj = jreader.responseJSonInsert(s);
             risposta = obj.get("azione").toString();
+            System.out.println(risposta);
             c = risposta.compareTo("Comando Errato") != 0;
         } catch (Exception e) {
             e.printStackTrace();

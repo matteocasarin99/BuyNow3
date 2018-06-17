@@ -112,12 +112,13 @@ public class Accedi_ActRoot extends AppCompatActivity {
                     return tab2;
                 }
                 case 2: {
-                    TabRoot3 tab3 = new TabRoot3();
-                    return tab3;
+                    TabRoot4 tab4 = new TabRoot4();
+
+                    return tab4;
                 }
                 case 3: {
-                    TabRoot4 tab4 = new TabRoot4();
-                    return tab4;
+                    TabRoot3 tab3 = new TabRoot3();
+                    return tab3;
                 }
             }
             return null;

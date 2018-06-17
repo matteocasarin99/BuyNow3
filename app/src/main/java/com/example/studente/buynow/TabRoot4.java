@@ -33,26 +33,16 @@ public class TabRoot4 extends Fragment{
             ut = new Utenti_Password();
             adapter = new AdapterJElimina(view.getContext(), ut.getProdotti(),ut);
             list.setAdapter(adapter);
-            list.setFocusable(true);
+            list.setFocusable(false);
             /*Button elimina= view.findViewById(R.id.buttonelimina);
             elimina.setFocusable(false);*/
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /*list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(ut.settings1().equals(parent.getItemAtPosition(position))) {
-
-                        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                    }else{
-                        if(ut.settings2().equals(parent.getItemAtPosition(position))){
-                            System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-                        }else{
-                            if(ut.settings3().equals(parent.getItemAtPosition(position))){
-                                System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
-                            }
-                        }
-                    }
+                    final Prodotti p=(Prodotti)parent.getItemAtPosition(position);
+                    System.out.println(p);
                 }
-            });
+            });*/
 
         }
         return view;
