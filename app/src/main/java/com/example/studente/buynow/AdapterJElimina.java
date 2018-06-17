@@ -1,6 +1,10 @@
 package com.example.studente.buynow;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,13 +66,30 @@ public class AdapterJElimina extends BaseAdapter {
         elimina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ut.elimina(data.get(i)).compareTo("Error")==0){
-                    Context context = view.getContext();
-                    CharSequence text = "ERROR DURING REGISTRATION";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
+                final AlertDialog.Builder miaAlert2 = new AlertDialog.Builder(view.getContext());
+                miaAlert2.setMessage("Eliminare il prodotto?");
+                miaAlert2.setTitle("Attenzione!");
+
+                miaAlert2.setCancelable(false);
+                miaAlert2.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+                miaAlert2.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (ut.elimina(data.get(i)).compareTo("Error") == 0) {
+                            Context context = view.getContext();
+                            CharSequence text = "ERROR DURING REGISTRATION";
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                        }
+                    }
+
+                });
+                AlertDialog alert = miaAlert2.create();
+                alert.show();
             }
         });
         return vi;

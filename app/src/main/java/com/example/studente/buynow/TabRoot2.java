@@ -1,6 +1,8 @@
 package com.example.studente.buynow;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,7 +28,6 @@ public class TabRoot2 extends Fragment{
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-
             list2 = view.findViewById(R.id.listr);
             ut = Accedi_ActRoot.ut;
             adapter = new AdapterJ(view.getContext(), ut.getProdotti());
@@ -34,7 +35,17 @@ public class TabRoot2 extends Fragment{
             list2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                    final Prodotti p = (Prodotti) parent.getItemAtPosition(position);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent i = new Intent(getActivity(), ActModifica.class);
+                            i.putExtra("Utenti", ut);
+                            i.putExtra("Prodotto", p);
+                            startActivity(i);
+                            getActivity().finish();
+                        }
+                    }, 500);
                 }
             });
         }

@@ -34,15 +34,6 @@ public class TabRoot4 extends Fragment{
             adapter = new AdapterJElimina(view.getContext(), ut.getProdotti(),ut);
             list.setAdapter(adapter);
             list.setFocusable(false);
-            /*Button elimina= view.findViewById(R.id.buttonelimina);
-            elimina.setFocusable(false);*/
-            /*list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    final Prodotti p=(Prodotti)parent.getItemAtPosition(position);
-                    System.out.println(p);
-                }
-            });*/
 
         }
         return view;
