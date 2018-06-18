@@ -20,6 +20,39 @@ public class AccountSettings extends AppCompatActivity {
     Context context;
 
     @Override
+    public void onBackPressed() {
+        // Here you want to show the user a dialog box
+        new AlertDialog.Builder(AccountSettings.this)
+                .setTitle("Back to login page")
+                .setMessage("Sei sicuro?")
+                .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // The user wants to leave - so dismiss the dialog and exit
+                        Context context = getApplicationContext();
+                        CharSequence text = "Logout In Corso...";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent i = new Intent(AccountSettings.this, MainActivity.class);
+                                i.putExtra("Utenti", ut);
+                                startActivity(i);
+                                finish();
+                            }
+                        }, 1000);
+                        dialog.dismiss();
+                    }
+                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // The user is not sure, so you can exit or just stay
+                dialog.dismiss();
+            }
+        }).show();
+
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_settings);
