@@ -18,7 +18,7 @@ public class CambioPassword extends AppCompatActivity {
     private int idUt;
     private boolean controlloOLD=false;
     private boolean controlloPass=false;
-    String password;
+    String password, tipo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +26,7 @@ public class CambioPassword extends AppCompatActivity {
         ut=(Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
         idUt=(Integer)getIntent().getExtras().getSerializable("id");
         password=(String)getIntent().getExtras().getSerializable("pass");
+        tipo = (String) getIntent().getExtras().getSerializable("tipo");
         final EditText textOld=findViewById(R.id.textOldPass);
         final EditText textNew=findViewById(R.id.textNewPass);
         final EditText textNew2=findViewById(R.id.textNewPass2);
@@ -122,7 +123,7 @@ public class CambioPassword extends AppCompatActivity {
             public void onClick(View v) {
                 boolean b;
                 if(controlloPass==true && controlloOLD==true){
-                    b=ut.cambio_Password(textNew.getText().toString(),idUt);
+                    b = ut.cambio_Password(textNew.getText().toString(), idUt, tipo);
                     if(b){
                         Context context = getApplicationContext();
                         CharSequence text = "Password Cambiata.\nEffettua il login con la nuova password";

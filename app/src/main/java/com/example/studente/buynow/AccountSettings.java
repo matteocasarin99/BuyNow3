@@ -18,46 +18,20 @@ public class AccountSettings extends AppCompatActivity {
     String password;
     private AdapterRow2 adapter;
     Context context;
+    private String tipo = "";
 
-    @Override
-    public void onBackPressed() {
-        // Here you want to show the user a dialog box
-        new AlertDialog.Builder(AccountSettings.this)
-                .setTitle("Back to login page")
-                .setMessage("Sei sicuro?")
-                .setPositiveButton("SI", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // The user wants to leave - so dismiss the dialog and exit
-                        Context context = getApplicationContext();
-                        CharSequence text = "Logout In Corso...";
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent i = new Intent(AccountSettings.this, MainActivity.class);
-                                i.putExtra("Utenti", ut);
-                                startActivity(i);
-                                finish();
-                            }
-                        }, 1000);
-                        dialog.dismiss();
-                    }
-                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // The user is not sure, so you can exit or just stay
-                dialog.dismiss();
-            }
-        }).show();
 
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_settings);
         ListView list = findViewById(R.id.listaa);
-        ut = Accedi_Act.ut;
+        tipo = (String) getIntent().getExtras().getSerializable("Tipo");
+        if (tipo.compareTo("standard") == 0) {
+            ut = Accedi_Act.ut;
+        } else {
+            ut = Accedi_ActRoot.ut;
+        }
         idUt = (Integer) getIntent().getExtras().getSerializable("Id");
         adapter = new AdapterRow2(getApplicationContext(), ut.arraylist_settings());
         password = (String) getIntent().getExtras().getSerializable("Password");
@@ -85,22 +59,23 @@ public class AccountSettings extends AppCompatActivity {
                     miaAlert.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             System.out.println(ut.eliminaUt(idUt));
-                           if(ut.eliminaUt(idUt).compareTo("Error")==0){
-                               Context context = getApplicationContext();
-                               CharSequence text = "Error During Delete";
-                               int duration = Toast.LENGTH_SHORT;
-                               Toast toast = Toast.makeText(context, text, duration);
-                               toast.show();
-                               new Handler().postDelayed(new Runnable() {
-                                   @Override
-                                   public void run() {
-                                       Intent i=new Intent(AccountSettings.this,MainActivity.class);
-                                       i.putExtra("Utenti",ut);
-                                       startActivity(i);
-                                       finish();
-                                   }
-                               }, 1000);
-                           }
+                            if (ut.eliminaUt(idUt).compareTo("Error") == 0) {
+                                Context context = getApplicationContext();
+                                CharSequence text = "Error During Delete";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                            } else {
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent i=new Intent(AccountSettings.this,MainActivity.class);
+                                        i.putExtra("Utenti",ut);
+                                        startActivity(i);
+                                        finish();
+                                    }
+                                }, 1000);
+                            }
                         }
                     });
 
@@ -114,6 +89,7 @@ public class AccountSettings extends AppCompatActivity {
                         i3.putExtra("Utenti", ut);
                         i3.putExtra("id", idUt);
                         i3.putExtra("pass", password);
+                        i3.putExtra("tipo", tipo);
                         startActivity(i3);
 
                     } else {
@@ -155,5 +131,49 @@ public class AccountSettings extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Here you want to show the user a dialog box
+        new AlertDialog.Builder(AccountSettings.this)
+                .setTitle("Back to previous page")
+                .setMessage("Sei sicuro?")
+                .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        if (tipo.compareTo("standard") == 0) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent i = new Intent(AccountSettings.this, Accedi_Act.class);
+                                    i.putExtra("Utenti", ut);
+                                    i.putExtra("Id", idUt);
+                                    i.putExtra("Password", password);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            }, 500);
+                        } else {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent i = new Intent(AccountSettings.this, Accedi_ActRoot.class);
+                                    i.putExtra("Utenti", ut);
+                                    i.putExtra("Id", idUt);
+                                    i.putExtra("Password", password);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            }, 500);
+                        }
+                        dialog.dismiss();
+                    }
+                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // The user is not sure, so you can exit or just stay
+                dialog.dismiss();
+            }
+        }).show();
+
     }
 }

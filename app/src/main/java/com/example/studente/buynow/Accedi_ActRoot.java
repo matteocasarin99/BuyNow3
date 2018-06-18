@@ -101,6 +101,7 @@ public class Accedi_ActRoot extends AppCompatActivity {
             i4.putExtra("Id", idUt);
             i4.putExtra("Utenti", ut);
             i4.putExtra("Password", password);
+            i4.putExtra("Tipo", "root");
             startActivity(i4);
             return true;
         }

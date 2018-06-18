@@ -300,30 +300,55 @@ public class Utenti_Password implements Serializable {
         return arraylistString.get(2);
     }
 
-    public boolean cambio_Password(String newPassword, int id_utente) {
+    public boolean cambio_Password(String newPassword, int id_utente, String tipo) {
         boolean c = false;
         URL url1 = null;
-        try {
-            String risposta = "";
-            url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=update%20utenti%20set%20password='" + newPassword + "'%20where%20id_utente='" + id_utente + "';");
+        if (tipo.compareTo("standard") == 0) {
+            try {
+                String risposta = "";
+                url1 = new URL(
+                        "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=update%20utenti%20set%20password='" + newPassword + "'%20where%20id_utente='" + id_utente + "';");
 
-            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
-            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
-            connection.setRequestMethod("GET");
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String inputLine;
-            while ((inputLine = in.readLine()) != null)
-                response.append(inputLine);
-            in.close();
-            String s = response.toString();
-            obj = jreader.responseJSonInsert(s);
-            risposta = obj.get("azione").toString();
-            c = risposta.compareTo("Comando Errato") != 0;
-        } catch (Exception e) {
-            e.printStackTrace();
+                HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+                connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+                connection.setRequestMethod("GET");
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null)
+                    response.append(inputLine);
+                in.close();
+                String s = response.toString();
+                obj = jreader.responseJSonInsert(s);
+                risposta = obj.get("azione").toString();
+                c = risposta.compareTo("Comando Errato") != 0;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                String risposta = "";
+                url1 = new URL(
+                        "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=update%20utenti_admin%20set%20password='" + newPassword + "'%20where%20id_utente='" + id_utente + "';");
+
+                HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+                connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+                connection.setRequestMethod("GET");
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null)
+                    response.append(inputLine);
+                in.close();
+                String s = response.toString();
+                obj = jreader.responseJSonInsert(s);
+                risposta = obj.get("azione").toString();
+                c = risposta.compareTo("Comando Errato") != 0;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         return c;
     }
 
