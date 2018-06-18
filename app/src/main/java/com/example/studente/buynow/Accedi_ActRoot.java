@@ -24,8 +24,8 @@ import android.widget.Toast;
 
 public class Accedi_ActRoot extends AppCompatActivity {
     static Utenti_Password ut;
-    int idUt = 0;
-    String password;
+    static int idUt = 0;
+    static String password;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 

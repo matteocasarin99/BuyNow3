@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,9 +21,13 @@ import android.widget.Toast;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class Ordina extends AppCompatActivity {
     private int idCarr, checkedRadioButtonId, radn;
@@ -33,7 +38,9 @@ public class Ordina extends AppCompatActivity {
     private Button btnOrd;
     private RadioGroup radioGroup;
     private RadioButton radioCarta, radioSconto;
-    private boolean carta_sconto;
+    private boolean carta_sconto = false;
+    private Future<Integer> results;
+    private ExecutorService executor;
 
     @Override
     public void onBackPressed() {
@@ -68,19 +75,16 @@ public class Ordina extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ExecutorService executor = Executors.newCachedThreadPool();
-        List<Future<Integer>> results = new LinkedList<>();
-        results.add(executor.submit(new ThreadRandom()));
-        for (Future<Integer> result : results) {
-            try {
-                System.out.printf("computed result: ", result.get());
-                radn = result.get();
-            } catch (Exception e) {
-                System.out.println("Interrupted while waiting for result: "
-                        + e.getMessage());
-            }
+        executor = Executors.newFixedThreadPool(1);
+        Callable<Integer> callable = new ThreadRandom();
+        results = executor.submit(callable);
+        try {
+            System.out.println("computed result: " + results.get());
+            radn = results.get();
+        } catch (Exception e) {
+            System.out.println("Interrupted while waiting for result: "
+                    + e.getMessage());
         }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ordina);
         ut = (Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
@@ -95,7 +99,7 @@ public class Ordina extends AppCompatActivity {
         textIndFatt = findViewById(R.id.indirizfatt);
         textIndSped = findViewById(R.id.indirizsped);
         btnOrd = findViewById(R.id.btnOrdina);
-
+        textCodOrd.setText(radn + "");
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -116,6 +120,7 @@ public class Ordina extends AppCompatActivity {
         btnOrd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (textBuono_Carta.getText().toString().compareTo("") == 0 || textIndSped.getText().toString().compareTo("") == 0 || textIndFatt.getText().toString().compareTo("") == 0 || checkedRadioButtonId == -1) {
                     Context context = getApplicationContext();
                     CharSequence text = "Compila i campi vuoti!!";
@@ -124,7 +129,7 @@ public class Ordina extends AppCompatActivity {
                     toast.show();
 
                 } else {
-
+                    Ordine o = new Ordine(textIndFatt.getText().toString(), textIndSped.getText().toString(), radn, idCarr, Integer.parseInt(textBuono_Carta.getText().toString()), carta_sconto);
                 }
             }
         });

@@ -6,17 +6,20 @@ import java.util.concurrent.*;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class ThreadRandom implements Callable<Integer> {
-    private Utenti_Password ut = new Utenti_Password();
-    private static int nth = 0;
-    private final int id = ++nth;
+    private Utenti_Password ut;
+    private int timeout;
+
+    public ThreadRandom() {
+        timeout = 100;
+        ut = new Utenti_Password();
+    }
 
     @Override
     public Integer call() throws Exception {
-        boolean b = false;
         int value = new Random().nextInt(1000000);
         while (ut.controllo_codordine(value) == false) {
             value = new Random().nextInt(1000000);
-            System.out.println(value + "");
+            System.out.println(value + " AAAAAAAAAAAAAAAAAAAAA");
         }
         try {
             MILLISECONDS.sleep(100);

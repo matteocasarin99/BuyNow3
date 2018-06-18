@@ -42,6 +42,8 @@ public class TabRoot2 extends Fragment{
                             Intent i = new Intent(getActivity(), ActModifica.class);
                             i.putExtra("Utenti", ut);
                             i.putExtra("Prodotto", p);
+                            i.putExtra("Id", Accedi_ActRoot.idUt);
+                            i.putExtra("Password", Accedi_ActRoot.password);
                             startActivity(i);
                             getActivity().finish();
                         }

@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 public class ActModifica extends AppCompatActivity {
     private EditText nomeprod;
+    private Utenti_Password ut;
+    private Integer idUt;
+    private String password;
 
     @Override
     public void onBackPressed() {
@@ -26,6 +29,9 @@ public class ActModifica extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Intent i = new Intent(ActModifica.this, Accedi_ActRoot.class);
+                                i.putExtra("Utenti", ut);
+                                i.putExtra("Id", idUt);
+                                i.putExtra("Password", password);
                                 startActivity(i);
                                 finish();
                             }
@@ -43,5 +49,8 @@ public class ActModifica extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.modifica);
+        ut = (Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
+        idUt = (Integer) getIntent().getExtras().getSerializable("Id");
+        password = (String) getIntent().getExtras().getSerializable("Password");
     }
 }
