@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 /**
@@ -21,6 +22,7 @@ public class TabFragment3 extends Fragment {
     public Utenti_Password ut;
     private ListView list;
     private int idUt;
+    private Button btnAcquista;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.tab3, container, false);
@@ -34,6 +36,7 @@ public class TabFragment3 extends Fragment {
             ut = Accedi_Act.ut;
             adapter = new AdapterJ(view.getContext(), ut.getCarrello(idUt));
             list.setAdapter(adapter);
+            btnAcquista = view.findViewById(R.id.btnAcquista);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, final long id) {
@@ -49,6 +52,16 @@ public class TabFragment3 extends Fragment {
                             getActivity().finish();
                         }
                     }, 500);
+                }
+            });
+            btnAcquista.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(), Ordina.class);
+                    i.putExtra("Utenti", ut);
+                    i.putExtra("IdUt", idUt);
+                    startActivity(i);
+                    getActivity().finish();
                 }
             });
         }

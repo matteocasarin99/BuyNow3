@@ -29,7 +29,7 @@ public class Accedi_Act extends AppCompatActivity {
     static Utenti_Password ut;
     public ArrayAdapter<Prodotti> adapter;
     static int idUt = 0;
-    String password;
+    static String password;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
@@ -108,7 +108,18 @@ public class Accedi_Act extends AppCompatActivity {
             i4.putExtra("Tipo", "root");
             startActivity(i4);
             return true;
+        } else {
+            if (id == R.id.orders) {
+                Intent i4 = new Intent(Accedi_Act.this, Ordini.class);
+                i4.putExtra("Id", idUt);
+                i4.putExtra("Utenti", ut);
+                i4.putExtra("Password", password);
+                i4.putExtra("Tipo", "root");
+                startActivity(i4);
+                return true;
+            }
         }
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -31,6 +31,7 @@ public class ActProdottoCarrello extends AppCompatActivity {
                             public void run() {
                                 Intent i = new Intent(ActProdottoCarrello.this, Accedi_Act.class);
                                 i.putExtra("Utenti", ut);
+                                i.putExtra("Id", idUt);
                                 startActivity(i);
                                 finish();
                             }

@@ -453,13 +453,14 @@ public class Utenti_Password implements Serializable {
         }
         return arraypr;
     }
-    public String addToCart(Prodotti p,int idutente){
+
+    public String addToCart(Prodotti p, int idutente, int quant) {
         boolean c=false;
-        URL url1 = null;
+        URL url1;
         try {
-            String risposta = "";
+            String risposta;
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=INSERT%20INTO%20`my_prova12344`.`carrelli`%20(`fk_idutente`,%20`fk_idprodotto`,%20`quantitaOrd`)%20VALUES%20('" + idutente + "',%20'" + p.getId_prod() + "',%20'" + quant + "');");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -474,10 +475,52 @@ public class Utenti_Password implements Serializable {
             obj = jreader.responseJSonInsert(s);
             risposta = obj.get("azione").toString();
             System.out.println(risposta);
-            c = risposta.compareTo("Comando Errato") != 0;
+            if (risposta.compareTo("Comando Errato") == 0) c = false;
+            else c = true;
         } catch (Exception e2) {
             e2.printStackTrace();
         }
-        return c ? "Done" : "Error";
+        if (c) return "Done";
+        else return "Error";
+    }
+
+    public ArrayList<Ordine> getOrdini() {
+        ArrayList<Ordine> array = new ArrayList<Ordine>();
+
+        return array;
+    }
+
+    public boolean controllo_codordine(int codordine) {
+        boolean b = true;
+        String risposta = "";
+        try {
+            URL url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20*%20from%20ordini");
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+            String s = response.toString();
+            if (s.compareTo("") == 0) {
+                b = true;
+            } else {
+                System.out.println(s);
+                array = jreader.responseJson(s);
+                for (int j = 0; j < array.size(); j++) {
+                    obj = (JSONObject) array.get(j);
+                    if (codordine == Integer.parseInt(obj.get("id_ordine").toString())) {
+                        b = false;
+                    }
+                }
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return b;
     }
 }

@@ -56,6 +56,7 @@ public class TabFragment2 extends Fragment {
                         i.putExtra("Utenti", ut);
                         i.putExtra("Prodotto", p);
                         i.putExtra("IdUt", idUt);
+                        i.putExtra("Password", Accedi_Act.password);
                         startActivity(i);
                         getActivity().finish();
                     }

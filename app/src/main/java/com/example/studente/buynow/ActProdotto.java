@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -20,9 +21,10 @@ public class ActProdotto extends AppCompatActivity {
     private Spinner spinner;
     private TextView nomep,descp,prezp,scontp,ingrp;
     private Button btnAgg;
+    private String password;
     private Prodotti p;
     private Utenti_Password ut;
-    private int idUt;
+    private int idUt, quantVol;
 
     @Override
     public void onBackPressed() {
@@ -38,6 +40,8 @@ public class ActProdotto extends AppCompatActivity {
                             public void run() {
                                 Intent i = new Intent(ActProdotto.this, Accedi_Act.class);
                                 i.putExtra("Utenti", ut);
+                                i.putExtra("Id", idUt);
+                                i.putExtra("Password", password);
                                 startActivity(i);
                                 finish();
                             }
@@ -59,6 +63,7 @@ public class ActProdotto extends AppCompatActivity {
         idUt=(Integer)getIntent().getExtras().getSerializable("IdUt");
         p=(Prodotti)getIntent().getExtras().getSerializable("Prodotto");
         ut=(Utenti_Password)getIntent().getExtras().getSerializable("Utenti");
+        password = (String) getIntent().getExtras().getSerializable("Password");
         //Dichiarazione
         nomep=findViewById(R.id.nomeProd);
         descp=findViewById(R.id.descrProd);
@@ -77,10 +82,21 @@ public class ActProdotto extends AppCompatActivity {
                 android.R.layout.simple_spinner_item,quant(p.getQuantitàDisp()));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                quantVol = Integer.parseInt((String) parent.getItemAtPosition(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         btnAgg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ut.addToCart(p,idUt).compareTo("Error")==0){
+                if (ut.addToCart(p, idUt, quantVol).compareTo("Error") == 0) {
                     Context context = getApplicationContext();
                     CharSequence text = "Error while adding to cart";
                     int duration = Toast.LENGTH_SHORT;
