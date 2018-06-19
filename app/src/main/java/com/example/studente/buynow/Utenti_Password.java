@@ -382,6 +382,7 @@ public class Utenti_Password implements Serializable {
         return c ? "Done" : "Error";
 
     }
+
     public String eliminaUt(int idUt) {
         boolean c = false;
         URL url1 = null;
@@ -484,9 +485,38 @@ public class Utenti_Password implements Serializable {
         else return "Error";
     }
 
-    public ArrayList<Ordine> getOrdini() {
-        ArrayList<Ordine> array = new ArrayList<Ordine>();
+    public ArrayList<Ordine> getOrdini(int idut) {
+        ArrayList<Ordine> arrayord = new ArrayList<Ordine>();
+        URL url1;
+        try {
+            String risposta;
+            url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20*%20from%20ordini%20where%20fk_idcarrello='" + idut + "';");
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+            String s = response.toString();
+            String indfat, indsped, corriere, posizione, datacon;
+            int idord, idcarr, codcart;
+            boolean carta_sconto;
+            array = jreader.responseJson(s);
+            for (int j = 0; j < array.size(); j++) {
+                obj = (JSONObject) array.get(j);
+                indfat = obj.get("indirizzo_fatt").toString();
+                indsped = obj.get("indirizzo_sped").toString();
+                corriere = obj.get("corriere").toString();
 
+                //arrayord.add(o);
+            }
+        } catch (Exception e2) {
+            e2.printStackTrace();
+        }
         return array;
     }
 

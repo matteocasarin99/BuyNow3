@@ -33,7 +33,7 @@ public class Ordina extends AppCompatActivity {
     private int idCarr, checkedRadioButtonId, radn;
     private Utenti_Password ut;
     private String pass;
-    private EditText textBuono_Carta, textIndFatt, textIndSped;
+    private EditText textBuono_Carta, textIndFatt, textIndSped, textCVC;
     private TextView textCodOrd;
     private Button btnOrd;
     private RadioGroup radioGroup;
@@ -99,6 +99,8 @@ public class Ordina extends AppCompatActivity {
         textIndFatt = findViewById(R.id.indirizfatt);
         textIndSped = findViewById(R.id.indirizsped);
         btnOrd = findViewById(R.id.btnOrdina);
+        textCVC = findViewById(R.id.textCVC);
+        textCVC.setVisibility(View.INVISIBLE);
         textCodOrd.setText(radn + "");
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -109,9 +111,11 @@ public class Ordina extends AppCompatActivity {
                 } else {
                     if (checkedRadioButtonId == radioCarta.getId()) {
                         carta_sconto = true;
+                        textCVC.setVisibility(View.VISIBLE);
                     } else {
                         if (checkedRadioButtonId == radioSconto.getId()) {
                             carta_sconto = false;
+                            textCVC.setVisibility(View.INVISIBLE);
                         }
                     }
                 }

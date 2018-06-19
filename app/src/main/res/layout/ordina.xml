@@ -119,4 +119,16 @@
         app:layout_constraintStart_toStartOf="@+id/textView31"
         app:layout_constraintTop_toBottomOf="@+id/indirizsped" />
 
+    <EditText
+        android:id="@+id/textCVC"
+        android:layout_width="44dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:ems="10"
+        android:inputType="number|phone"
+        android:text="CVC"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toEndOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/textCodice" />
+
 </android.support.constraint.ConstraintLayout>
