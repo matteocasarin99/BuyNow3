@@ -520,6 +520,35 @@ public class Utenti_Password implements Serializable {
         return array;
     }
 
+    public String addOrdine(Ordine o) {
+        boolean c = false;
+        URL url1;
+        try {
+            String risposta;
+            url1 = new URL(
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=INSERT%20INTO%20`my_prova12344`.`ordini`%20(`Carta_Sconto`,%20`codiceSconto_Carta`,%20`corriere`,%20`dataConsegna`,%20`fk_idcarrello`,%20`id_ordine`,%20`indirizzo_fatt`,%20`indirizzo_sped`,%20`posizione`)%20VALUES%20('" + o.isCarta_sconto() + "',%20'" + o.getCodCarta_Sconto() + "',%20'" + o.getCorriere() + "',%20'" + o.getDataArrivo() + "',%20'" + o.getCodCarr() + "',%20'" + o.getCodOrd() + "',%20'" + o.getIndirizzofatt() + "',%20'" + o.getIndirizzosped() + "',%20'" + o.getPosizione() + "');");
+
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76");
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+            String s = response.toString();
+            obj = jreader.responseJSonInsert(s);
+            risposta = obj.get("azione").toString();
+            System.out.println(risposta);
+            if (risposta.compareTo("Comando Errato") == 0) c = false;
+            else c = true;
+        } catch (Exception e2) {
+            e2.printStackTrace();
+        }
+        if (c) return "Done";
+        else return "Error";
+    }
     public boolean controllo_codordine(int codordine) {
         boolean b = true;
         String risposta = "";

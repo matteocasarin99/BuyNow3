@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.concurrent.*;
 
 /**
  * Created by Matteo on 19/03/2018.
@@ -21,7 +23,11 @@ public class TabFragment1 extends Fragment{
     public Utenti_Password ut;
     private ListView list;
     private View view;
+    private ArrayList<Prodotti> array;
     int idUt;
+    private ExecutorService executor;
+    private Future<ArrayList<Prodotti>> results;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab1, container, false);
@@ -33,7 +39,18 @@ public class TabFragment1 extends Fragment{
             idUt =Accedi_Act.idUt;
             list = view.findViewById(R.id.list);
             ut = Accedi_Act.ut;
-            adapter = new AdapterJ(view.getContext(), ut.getProdotti());
+            executor = Executors.newFixedThreadPool(1);
+            Callable<ArrayList<Prodotti>> callable = new GetProdotti(ut);
+            results = executor.submit(callable);
+            try {
+                System.out.println("computed result: " + results.get());
+                array = results.get();
+            } catch (Exception e) {
+                System.out.println("Interrupted while waiting for result: "
+                        + e.getMessage());
+            }
+
+            adapter = new AdapterJ(view.getContext(), array);
             list.setAdapter(adapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

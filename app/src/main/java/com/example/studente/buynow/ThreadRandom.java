@@ -1,5 +1,6 @@
 package com.example.studente.buynow;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.*;
 
@@ -19,7 +20,6 @@ public class ThreadRandom implements Callable<Integer> {
         int value = new Random().nextInt(1000000);
         while (ut.controllo_codordine(value) == false) {
             value = new Random().nextInt(1000000);
-            System.out.println(value + " AAAAAAAAAAAAAAAAAAAAA");
         }
         try {
             MILLISECONDS.sleep(100);

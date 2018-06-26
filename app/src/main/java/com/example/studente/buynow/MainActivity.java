@@ -13,8 +13,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 public class MainActivity extends AppCompatActivity {
     Utenti_Password a = new Utenti_Password();
+
+    private ExecutorService executor;
+    private Future<String> results;
+    private String app;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -24,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
             super.onCreate(savedInstanceState);
+
             setContentView(R.layout.activity_main);
             if (getIntent().getExtras() != null) {
                 a = (Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
@@ -42,10 +53,20 @@ public class MainActivity extends AppCompatActivity {
                             Toast toast = Toast.makeText(context, text, duration);
                             toast.show();
                         } else {
-                            if (a.search_utente(ut.getText().toString(), pass.getText().toString()).compareTo("nessuno") != 0) {
+                            executor = Executors.newFixedThreadPool(1);
+                            Callable<String> callable = new GetLogin(a, ut.getText().toString(), pass.getText().toString());
+                            results = executor.submit(callable);
+                            try {
+                                System.out.println("computed result: " + results.get());
+                                app = results.get();
+                            } catch (Exception e) {
+                                System.out.println("Interrupted while waiting for result: "
+                                        + e.getMessage());
+                            }
+                            if (app.compareTo("nessuno") != 0) {
                                 Intent i = new Intent(MainActivity.this, Caricamento.class);
                                 i.putExtra("Utenti", a);
-                                i.putExtra("Act", a.search_utente(ut.getText().toString(), pass.getText().toString()));
+                                i.putExtra("Act", app);
                                 i.putExtra("Id", Utenti_Password.id);
                                 i.putExtra("Password", Utenti_Password.password);
                                 startActivity(i);

@@ -10,10 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.concurrent.*;
 
 public class TabFragment2 extends Fragment {
     private AdapterJ adapter;
@@ -21,6 +22,9 @@ public class TabFragment2 extends Fragment {
     private ListView list;
     public View v;
     private int idUt;
+    private ExecutorService executor;
+    private Future<ArrayList<Prodotti>> results;
+    private ArrayList<Prodotti> array;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,9 +39,10 @@ public class TabFragment2 extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (textCerca.getText().toString().compareTo("")==0) {
-                    adapter = new AdapterJ(v.getContext(), ut.getProdotti());
+
+                    adapter = new AdapterJ(v.getContext(), getArrayProd());
                 }else {
-                    adapter = new AdapterJ(v.getContext(), ut.searchProdotti(textCerca.getText().toString()));
+                    adapter = new AdapterJ(v.getContext(), searchProd(textCerca.getText().toString()));
                 }
                 list.setAdapter(adapter);
             }
@@ -64,5 +69,35 @@ public class TabFragment2 extends Fragment {
             }
         });
         return v;
+    }
+
+    public ArrayList<Prodotti> getArrayProd() {
+        executor = Executors.newFixedThreadPool(1);
+        Callable<ArrayList<Prodotti>> callable = new GetProdotti(ut);
+        results = executor.submit(callable);
+
+        try {
+            System.out.println("computed result: " + results.get());
+            array = results.get();
+        } catch (Exception e) {
+            System.out.println("Interrupted while waiting for result: "
+                    + e.getMessage());
+        }
+        return array;
+    }
+
+    public ArrayList<Prodotti> searchProd(String search) {
+        executor = Executors.newFixedThreadPool(1);
+        Callable<ArrayList<Prodotti>> callable = new SearchProd(ut, search);
+        results = executor.submit(callable);
+
+        try {
+            System.out.println("computed result: " + results.get());
+            array = results.get();
+        } catch (Exception e) {
+            System.out.println("Interrupted while waiting for result: "
+                    + e.getMessage());
+        }
+        return array;
     }
 }

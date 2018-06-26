@@ -11,13 +11,14 @@
         android:layout_width="61dp"
         android:layout_height="53dp"
         android:layout_marginBottom="29dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="59dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/btnAddCart2"
         app:layout_constraintStart_toEndOf="@+id/textView21"
         app:layout_constraintTop_toBottomOf="@+id/editText3"
-        app:layout_constraintVertical_bias="0.933" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/editText3"
@@ -25,7 +26,7 @@
         android:layout_height="78dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="164dp"
         android:ems="10"
         android:inputType="textMultiLine"
         android:text="Ingredienti Prodotto"
@@ -39,12 +40,14 @@
         android:layout_width="12dp"
         android:layout_height="27dp"
         android:layout_marginBottom="29dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="59dp"
         android:text="€"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btnAddCart2"
         app:layout_constraintStart_toEndOf="@+id/editText4"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/editText3"
+        app:layout_constraintVertical_bias="0.208" />
 
     <TextView
         android:id="@+id/textView23"
@@ -59,14 +62,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/editText5"
         app:layout_constraintTop_toBottomOf="@+id/editText3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.217" />
 
     <Spinner
         android:id="@+id/spinner2"
         android:layout_width="92dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="59dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="60dp"
         android:spinnerMode="dropdown"
         app:layout_constraintStart_toEndOf="@+id/textView25"
         app:layout_constraintTop_toBottomOf="@+id/editText2" />
@@ -75,8 +77,8 @@
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="26dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="59dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="60dp"
         android:text="Quantità"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText2" />
@@ -87,10 +89,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="68dp"
         android:text="Modifica"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/spinner2" />
 
@@ -110,7 +111,7 @@
         android:layout_width="138dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="72dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Nome Prodotto"
@@ -121,8 +122,8 @@
         android:id="@+id/editText2"
         android:layout_width="156dp"
         android:layout_height="80dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:inputType="textMultiLine"
         android:text="Descrizione Prodotto"
@@ -134,14 +135,14 @@
         android:layout_width="71dp"
         android:layout_height="53dp"
         android:layout_marginBottom="29dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="59dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/btnAddCart2"
         app:layout_constraintStart_toEndOf="@+id/spinner2"
         app:layout_constraintTop_toBottomOf="@+id/editText3"
-        app:layout_constraintVertical_bias="0.933" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/editText6"
@@ -156,6 +157,8 @@
         android:text="Provenienza"
         app:layout_constraintBottom_toTopOf="@+id/editText3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/listMod" />
+        app:layout_constraintTop_toBottomOf="@+id/listMod"
+        app:layout_constraintVertical_bias="0.438" />
 </android.support.constraint.ConstraintLayout>

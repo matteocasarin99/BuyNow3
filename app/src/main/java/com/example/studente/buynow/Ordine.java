@@ -1,7 +1,7 @@
 package com.example.studente.buynow;
 
 public class Ordine {
-    private String indirizzofatt, indirizzosped, corriere, dataArrivo, posizione;
+    private String indirizzofatt, indirizzosped, corriere = "null", dataArrivo = "null", posizione = "null";
     private int codOrd, codCarr, codCarta_Sconto;
     private boolean carta_sconto;//TRUE CARTA FALSE BUONO SCONTO
 
@@ -90,8 +90,12 @@ public class Ordine {
         this.codCarta_Sconto = codCarta_Sconto;
     }
 
-    public boolean isCarta_sconto() {
-        return carta_sconto;
+    public String isCarta_sconto() {
+        if (carta_sconto) {
+            return "Carta";
+        } else {
+            return "Sconto";
+        }
     }
 
     public void setCarta_sconto(boolean carta_sconto) {
