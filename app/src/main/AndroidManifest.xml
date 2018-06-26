@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,32 +22,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Reg_Act"
+            android:name=".Activities.Reg_Act"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Accedi_Act"
+            android:name=".Activities.Accedi_Act"
             android:label="@string/title_activity_accedi_"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Accedi_ActRoot"
+            android:name=".Activities.Accedi_ActRoot"
             android:label="@string/title_activity_accedi__act_root"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AccountSettings"
+            android:name=".Activities.AccountSettings"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Caricamento"
+            android:name=".Activities.Caricamento"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CambioPassword"
+            android:name=".Activities.CambioPassword"
             android:screenOrientation="portrait" />
-        <activity android:name=".ActProdotto" />
-        <activity android:name=".ActProdottoCarrello" />
-        <activity android:name=".ActModifica" />
-        <activity android:name=".Ordina" />
-        <activity android:name=".Ordini"></activity>
+        <activity android:name=".Activities.ActProdotto" />
+        <activity android:name=".Activities.ActProdottoCarrello" />
+        <activity android:name=".Activities.ActModifica" />
+        <activity android:name=".Activities.Ordina" />
+        <activity android:name=".Activities.Ordini"></activity>
     </application>
 
 </manifest>
