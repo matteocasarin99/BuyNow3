@@ -14,8 +14,17 @@ import android.widget.Toast;
 
 import com.example.studente.buynow.Adapters.AdapterRow2;
 import com.example.studente.buynow.Models.Impostazioni;
+import com.example.studente.buynow.Models.Prodotti;
 import com.example.studente.buynow.R;
+import com.example.studente.buynow.Threads.ElimThr;
+import com.example.studente.buynow.Threads.GetProdotti;
 import com.example.studente.buynow.Utils.Utenti_Password;
+
+import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class AccountSettings extends AppCompatActivity {
     public Utenti_Password ut;
@@ -23,7 +32,9 @@ public class AccountSettings extends AppCompatActivity {
     String password;
     private AdapterRow2 adapter;
     Context context;
-    private String tipo = "";
+    private String tipo = "", app;
+    private ExecutorService executor;
+    private Future<String> results;
 
 
     @Override
@@ -63,8 +74,16 @@ public class AccountSettings extends AppCompatActivity {
                     });
                     miaAlert.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            System.out.println(ut.eliminaUt(idUt));
-                            if (ut.eliminaUt(idUt).compareTo("Error") == 0) {
+                            executor = Executors.newFixedThreadPool(1);
+                            Callable<String> callable = new ElimThr(ut, idUt);
+                            results = executor.submit(callable);
+                            try {
+                                app = results.get();
+                            } catch (Exception e) {
+                                System.out.println("Interrupted while waiting for result: "
+                                        + e.getMessage());
+                            }
+                            if (app.compareTo("Error") == 0) {
                                 Context context = getApplicationContext();
                                 CharSequence text = "Error During Delete";
                                 int duration = Toast.LENGTH_SHORT;

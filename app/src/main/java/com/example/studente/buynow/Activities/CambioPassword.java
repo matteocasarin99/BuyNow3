@@ -14,14 +14,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.studente.buynow.R;
+import com.example.studente.buynow.Threads.ChngPassThr;
+import com.example.studente.buynow.Threads.ElimThr;
 import com.example.studente.buynow.Utils.Utenti_Password;
+
+import java.util.concurrent.*;
 
 public class CambioPassword extends AppCompatActivity {
     public Utenti_Password ut;
     private int idUt;
     private boolean controlloOLD=false;
-    private boolean controlloPass=false;
+    private boolean controlloPass = false, b;
     String password, tipo;
+    private ExecutorService executor;
+    private Future<Boolean> results;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,9 +130,16 @@ public class CambioPassword extends AppCompatActivity {
         cambia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean b;
                 if(controlloPass==true && controlloOLD==true){
-                    b = ut.cambio_Password(textNew.getText().toString(), idUt, tipo);
+                    executor = Executors.newFixedThreadPool(1);
+                    Callable<Boolean> callable = new ChngPassThr(ut, idUt, textNew.getText().toString(), tipo);
+                    results = executor.submit(callable);
+                    try {
+                        b = results.get();
+                    } catch (Exception e) {
+                        System.out.println("Interrupted while waiting for result: "
+                                + e.getMessage());
+                    }
                     if(b){
                         Context context = getApplicationContext();
                         CharSequence text = "Password Cambiata.\nEffettua il login con la nuova password";

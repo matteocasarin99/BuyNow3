@@ -17,9 +17,12 @@ import android.widget.Toast;
 
 import com.example.studente.buynow.Models.Prodotti;
 import com.example.studente.buynow.R;
+import com.example.studente.buynow.Threads.AddToCart;
+import com.example.studente.buynow.Threads.ElimThr;
 import com.example.studente.buynow.Utils.Utenti_Password;
 
 import java.util.ArrayList;
+import java.util.concurrent.*;
 
 public class ActProdotto extends AppCompatActivity {
     private Spinner spinner;
@@ -29,6 +32,9 @@ public class ActProdotto extends AppCompatActivity {
     private Prodotti p;
     private Utenti_Password ut;
     private int idUt, quantVol;
+    private ExecutorService executor;
+    private Future<String> results;
+    private String app = "Error";
 
     @Override
     public void onBackPressed() {
@@ -100,7 +106,17 @@ public class ActProdotto extends AppCompatActivity {
         btnAgg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ut.addToCart(p, idUt, quantVol).compareTo("Error") == 0) {
+
+                executor = Executors.newFixedThreadPool(1);
+                Callable<String> callable = new AddToCart(ut, p, idUt, quantVol);
+                results = executor.submit(callable);
+                try {
+                    app = results.get();
+                } catch (Exception e) {
+                    System.out.println("Interrupted while waiting for result: "
+                            + e.getMessage());
+                }
+                if (app.compareTo("Error") == 0) {
                     Context context = getApplicationContext();
                     CharSequence text = "Error while adding to cart";
                     int duration = Toast.LENGTH_SHORT;

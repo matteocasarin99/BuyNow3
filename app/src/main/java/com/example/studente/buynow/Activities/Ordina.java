@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.studente.buynow.Models.Ordine;
 import com.example.studente.buynow.R;
+import com.example.studente.buynow.Threads.AddOrdine;
 import com.example.studente.buynow.Threads.ThreadRandom;
 import com.example.studente.buynow.Utils.Utenti_Password;
 
@@ -28,7 +29,7 @@ import java.util.concurrent.Future;
 public class Ordina extends AppCompatActivity {
     private int idCarr, checkedRadioButtonId, radn;
     private Utenti_Password ut;
-    private String pass;
+    private String pass, app;
     private EditText textBuono_Carta, textIndFatt, textIndSped, textCVC;
     private TextView textCodOrd;
     private Button btnOrd;
@@ -36,6 +37,7 @@ public class Ordina extends AppCompatActivity {
     private RadioButton radioCarta, radioSconto;
     private boolean carta_sconto = false;
     private Future<Integer> results;
+    private Future<String> result;
     private ExecutorService executor;
 
     @Override
@@ -130,6 +132,17 @@ public class Ordina extends AppCompatActivity {
 
                 } else {
                     Ordine o = new Ordine(textIndFatt.getText().toString(), textIndSped.getText().toString(), radn, idCarr, Integer.parseInt(textBuono_Carta.getText().toString()), carta_sconto);
+                    executor = Executors.newFixedThreadPool(1);
+                    Callable<String> callable = new AddOrdine(ut, o);
+                    result = executor.submit(callable);
+                    try {
+                        System.out.println("computed result: " + result.get());
+                        app = result.get();
+                    } catch (Exception e) {
+                        System.out.println("Interrupted while waiting for result: "
+                                + e.getMessage());
+                    }
+
                 }
             }
         });

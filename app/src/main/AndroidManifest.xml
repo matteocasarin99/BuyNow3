@@ -47,7 +47,8 @@
         <activity android:name=".Activities.ActProdottoCarrello" />
         <activity android:name=".Activities.ActModifica" />
         <activity android:name=".Activities.Ordina" />
-        <activity android:name=".Activities.Ordini"></activity>
+        <activity android:name=".Activities.Ordini" />
+        <activity android:name=".Activities.ShowCarrello"></activity>
     </application>
 
 </manifest>

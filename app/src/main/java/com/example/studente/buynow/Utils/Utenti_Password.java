@@ -4,6 +4,8 @@ import com.example.studente.buynow.Models.Impostazioni;
 import com.example.studente.buynow.Models.Ordine;
 import com.example.studente.buynow.Models.Prodotti;
 import com.example.studente.buynow.Models.Utente;
+import com.example.studente.buynow.Threads.AddToCart;
+import com.example.studente.buynow.Threads.GetIDCart;
 import com.example.studente.buynow.Utils.JsonParse;
 
 import org.json.simple.JSONArray;
@@ -15,13 +17,17 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Created by studente on 13/03/2018.
  */
 
 public class Utenti_Password implements Serializable {
-    public static int id;
+    public static int id, idcart;
     public static String password;
     private static ArrayList<Utente> array_utnorm = new ArrayList<Utente>();
     private static ArrayList<Utente> array_utadmin = new ArrayList<Utente>();
@@ -409,13 +415,13 @@ public class Utenti_Password implements Serializable {
         return c ? "Done" : "Error";
     }
 
-    public ArrayList<Prodotti> getCarrello(int idutente){
-        ArrayList<Prodotti> arraypr=new ArrayList<Prodotti>();
+    public ArrayList<Prodotti> getCarrello(int idutente) {
+        ArrayList<Prodotti> arraypr = new ArrayList<Prodotti>();
         URL url1 = null;
         try {
             String risposta = "";
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20prodotti.nomeProd,prodotti.descrizione,prodotti.ingredienti,prodotti.prezzo,prodotti.sconto,prodotti.id_prod,prodotti.provenienza,carrelli.quantitaOrd%20from%20prodotti,carrelli%20where%20carrelli.fk_idutente="+idutente+"%20and%20prodotti.id_prod=carrelli.fk_idprodotto");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20prodotti.nomeProd,prodotti.descrizione,prodotti.ingredienti,prodotti.prezzo,prodotti.sconto,prodotti.id_prod,prodotti.provenienza,carrelli.quantitaOrd%20from%20prodotti,carrelli%20where%20carrelli.fk_idutente=" + idutente + "%20and%20prodotti.id_prod=carrelli.fk_idprodotto");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
             connection.setRequestMethod("GET");
@@ -442,7 +448,7 @@ public class Utenti_Password implements Serializable {
                 prezzo = Double.parseDouble(obj.get("prezzo").toString());
                 sconto = Double.parseDouble(obj.get("sconto").toString());
                 id = Integer.parseInt(obj.get("id_prod").toString());
-                quantitaOrd=Integer.parseInt(obj.get("quantitaOrd").toString());
+                quantitaOrd = Integer.parseInt(obj.get("quantitaOrd").toString());
                 Prodotti p = new Prodotti(id, nome, descrizione, provenienza, prezzo, sconto, quantitaOrd, ingredienti);
                 arraypr.add(p);
             }
@@ -454,12 +460,21 @@ public class Utenti_Password implements Serializable {
     }
 
     public String addToCart(Prodotti p, int idutente, int quant) {
-        boolean c=false;
+        boolean c = false;
         URL url1;
+        /*ExecutorService executor = Executors.newFixedThreadPool(1);
+        Callable<Integer> callable = new GetIDCart(idutente);
+        Future<Integer> results = executor.submit(callable);
+        try {
+            idcart = results.get();
+        } catch (Exception e) {
+            System.out.println("Interrupted while waiting for result: "
+                    + e.getMessage());
+        }*/
         try {
             String risposta;
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=INSERT%20INTO%20`my_prova12344`.`carrelli`%20(`fk_idutente`,%20`fk_idprodotto`,%20`quantitaOrd`)%20VALUES%20('" + idutente + "',%20'" + p.getId_prod() + "',%20'" + quant + "');");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=INSERT%20INTO%20`my_prova12344`.`carrelli`%20(`id_carrello`,%20`fk_idutente`,%20`fk_idprodotto`,%20`quantitaOrd`)%20VALUES%20(NULL,%20'" + idutente + "',%20'" + p.getId_prod() + "',%20'" + quant + "');");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -473,7 +488,7 @@ public class Utenti_Password implements Serializable {
             String s = response.toString();
             obj = jreader.responseJSonInsert(s);
             risposta = obj.get("azione").toString();
-            System.out.println(risposta);
+            System.out.println(risposta + "AAAAAAAAAAAAAAAAAAAAA AAAAA");
             if (risposta.compareTo("Comando Errato") == 0) c = false;
             else c = true;
         } catch (Exception e2) {
@@ -489,7 +504,7 @@ public class Utenti_Password implements Serializable {
         try {
             String risposta;
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20*%20from%20ordini%20where%20fk_idcarrello='" + idut + "';");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20*%20from%20ordini%20where%20fk_idcarrello=id_carrello%20and%20carrelli.fk_idutente='" + idut + "';");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
             connection.setRequestMethod("GET");
@@ -500,7 +515,7 @@ public class Utenti_Password implements Serializable {
                 response.append(inputLine);
             in.close();
             String s = response.toString();
-            String indfat, indsped, corriere, posizione, datacon;
+            String indfat, indsped, corriere, posizione, datacon, pagamento;
             int idord, idcarr, codcart;
             boolean carta_sconto;
             array = jreader.responseJson(s);
@@ -509,13 +524,25 @@ public class Utenti_Password implements Serializable {
                 indfat = obj.get("indirizzo_fatt").toString();
                 indsped = obj.get("indirizzo_sped").toString();
                 corriere = obj.get("corriere").toString();
-
-                //arrayord.add(o);
+                posizione = obj.get("posizione").toString();
+                datacon = obj.get("dataConsegna").toString();
+                pagamento = obj.get("pagamento").toString();
+                idord = Integer.parseInt(obj.get("id_ordine").toString());
+                idcarr = Integer.parseInt(obj.get("fk_idcarrello").toString());
+                codcart = Integer.parseInt(obj.get("codiceSconto_Carta").toString());
+                if (obj.get("Carta_Sconto").toString().compareTo("Carta") == 0) {
+                    carta_sconto = true;
+                } else {
+                    carta_sconto = false;
+                }
+                Ordine o = new Ordine(indfat, indsped, corriere, datacon, posizione, idord, idcarr, codcart, carta_sconto, pagamento);
+                System.out.println(o);
+                arrayord.add(o);
             }
         } catch (Exception e2) {
             e2.printStackTrace();
         }
-        return array;
+        return arrayord;
     }
 
     public String addOrdine(Ordine o) {
@@ -524,7 +551,7 @@ public class Utenti_Password implements Serializable {
         try {
             String risposta;
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=INSERT%20INTO%20`my_prova12344`.`ordini`%20(`Carta_Sconto`,%20`codiceSconto_Carta`,%20`corriere`,%20`dataConsegna`,%20`fk_idcarrello`,%20`id_ordine`,%20`indirizzo_fatt`,%20`indirizzo_sped`,%20`posizione`)%20VALUES%20('" + o.isCarta_sconto() + "',%20'" + o.getCodCarta_Sconto() + "',%20'" + o.getCorriere() + "',%20'" + o.getDataArrivo() + "',%20'" + o.getCodCarr() + "',%20'" + o.getCodOrd() + "',%20'" + o.getIndirizzofatt() + "',%20'" + o.getIndirizzosped() + "',%20'" + o.getPosizione() + "');");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=INSERT%20INTO%20`my_prova12344`.`ordini`%20(`Carta_Sconto`,%20`codiceSconto_Carta`,%20`corriere`,%20`dataConsegna`,%20`fk_idcarrello`,%20`id_ordine`,%20`indirizzo_fatt`,%20`indirizzo_sped`,%20`posizione`,%20`pagamento`)%20VALUES%20('" + o.isCarta_sconto() + "',%20'" + o.getCodCarta_Sconto() + "',%20'" + o.getCorriere() + "',%20'" + o.getDataArrivo() + "',%20'" + o.getCodCarr() + "',%20'" + o.getCodOrd() + "',%20'" + o.getIndirizzofatt() + "',%20'" + o.getIndirizzosped() + "',%20'" + o.getPosizione() + "',%20'" + o.getPagamento() + "');");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -547,6 +574,7 @@ public class Utenti_Password implements Serializable {
         if (c) return "Done";
         else return "Error";
     }
+
     public boolean controllo_codordine(int codordine) {
         boolean b = true;
         String risposta = "";
@@ -580,4 +608,5 @@ public class Utenti_Password implements Serializable {
         }
         return b;
     }
+
 }

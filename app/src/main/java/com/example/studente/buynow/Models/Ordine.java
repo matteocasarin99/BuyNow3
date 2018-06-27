@@ -1,9 +1,12 @@
 package com.example.studente.buynow.Models;
 
-public class Ordine {
+import java.io.Serializable;
+
+public class Ordine implements Serializable {
     private String indirizzofatt, indirizzosped, corriere = "null", dataArrivo = "null", posizione = "null";
     private int codOrd, codCarr, codCarta_Sconto;
     private boolean carta_sconto;//TRUE CARTA FALSE BUONO SCONTO
+    private String pagamento;
 
     public Ordine(String indirizzofatt, String indirizzosped, int codOrd, int codCarr, int codCarta_Sconto, boolean carta_sconto) {
         this.indirizzofatt = indirizzofatt;
@@ -14,7 +17,7 @@ public class Ordine {
         this.carta_sconto = carta_sconto;
     }
 
-    public Ordine(String indirizzofatt, String indirizzosped, String corriere, String dataArrivo, String posizione, int codOrd, int codCarr, int codCarta_Sconto, boolean carta_sconto) {
+    public Ordine(String indirizzofatt, String indirizzosped, String corriere, String dataArrivo, String posizione, int codOrd, int codCarr, int codCarta_Sconto, boolean carta_sconto, String pagamento) {
         this.indirizzofatt = indirizzofatt;
         this.indirizzosped = indirizzosped;
         this.corriere = corriere;
@@ -24,6 +27,7 @@ public class Ordine {
         this.codCarr = codCarr;
         this.codCarta_Sconto = codCarta_Sconto;
         this.carta_sconto = carta_sconto;
+        this.pagamento = pagamento;
     }
 
     public String getIndirizzofatt() {
@@ -115,5 +119,9 @@ public class Ordine {
                 ", codCarta_Sconto=" + codCarta_Sconto +
                 ", carta_sconto=" + carta_sconto +
                 '}';
+    }
+
+    public String getPagamento() {
+        return pagamento;
     }
 }
