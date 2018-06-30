@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                                 i.putExtra("Id", Utenti_Password.id);
                                 i.putExtra("Password", Utenti_Password.password);
                                 startActivity(i);
+                                finish();
                             } else {
                                 Context context = getApplicationContext();
                                 CharSequence text = "Non hai un account!!";

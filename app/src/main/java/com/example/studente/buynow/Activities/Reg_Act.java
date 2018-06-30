@@ -112,6 +112,7 @@ public class Reg_Act extends AppCompatActivity {
                             Intent i3 = new Intent(Reg_Act.this, MainActivity.class);
                             i3.putExtra("Utenti", ut);
                             startActivity(i3);
+                            finish();
                         } else {
                             Context context = getApplicationContext();
                             CharSequence text = "ERROR DURING REGISTRATION";
@@ -147,7 +148,7 @@ public class Reg_Act extends AppCompatActivity {
                                 startActivity(i);
                                 finish();
                             }
-                        }, 500);
+                        }, 300);
                         dialog.dismiss();
                     }
                 }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
