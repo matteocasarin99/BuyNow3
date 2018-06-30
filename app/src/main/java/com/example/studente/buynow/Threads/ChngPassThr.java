@@ -4,7 +4,7 @@ import com.example.studente.buynow.Utils.Utenti_Password;
 
 import java.util.concurrent.Callable;
 
-public class ChngPassThr implements Callable<Boolean> {
+public class ChngPassThr implements Callable<String> {
     private String app, pass, tipo;
     private Utenti_Password ut;
     private int timeout, id;
@@ -17,7 +17,7 @@ public class ChngPassThr implements Callable<Boolean> {
     }
 
     @Override
-    public Boolean call() throws Exception {
+    public String call() throws Exception {
         return ut.cambio_Password(pass, id, tipo);
     }
 }

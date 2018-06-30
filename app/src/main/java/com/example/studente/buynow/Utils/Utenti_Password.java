@@ -143,6 +143,7 @@ public class Utenti_Password implements Serializable {
     //DA RIFARE!!
     public ArrayList<Prodotti> searchProdotti(String cerca) {
         ArrayList<Prodotti> array_prod = new ArrayList<Prodotti>();
+        cerca = cerca.trim();
         URL url1 = null;
         try {
             url1 = new URL(
@@ -304,7 +305,7 @@ public class Utenti_Password implements Serializable {
         return arraylistString.get(2);
     }
 
-    public boolean cambio_Password(String newPassword, int id_utente, String tipo) {
+    public String cambio_Password(String newPassword, int id_utente, String tipo) {
         boolean c = false;
         URL url1 = null;
         if (tipo.compareTo("standard") == 0) {
@@ -353,7 +354,7 @@ public class Utenti_Password implements Serializable {
             }
         }
 
-        return c;
+        return c ? "Done" : "Error";
     }
 
 

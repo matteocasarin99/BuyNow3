@@ -24,10 +24,11 @@ public class CambioPassword extends AppCompatActivity {
     public Utenti_Password ut;
     private int idUt;
     private boolean controlloOLD=false;
-    private boolean controlloPass = false, b;
+    private boolean controlloPass = false;
+    private String b;
     String password, tipo;
     private ExecutorService executor;
-    private Future<Boolean> results;
+    private Future<String> results;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +133,7 @@ public class CambioPassword extends AppCompatActivity {
             public void onClick(View v) {
                 if(controlloPass==true && controlloOLD==true){
                     executor = Executors.newFixedThreadPool(1);
-                    Callable<Boolean> callable = new ChngPassThr(ut, idUt, textNew.getText().toString(), tipo);
+                    Callable<String> callable = new ChngPassThr(ut, idUt, textNew.getText().toString(), tipo);
                     results = executor.submit(callable);
                     try {
                         b = results.get();
@@ -140,12 +141,21 @@ public class CambioPassword extends AppCompatActivity {
                         System.out.println("Interrupted while waiting for result: "
                                 + e.getMessage());
                     }
-                    if(b){
+                    if (b.compareTo("Done") == 0) {
                         Context context = getApplicationContext();
                         CharSequence text = "Password Cambiata.\nEffettua il login con la nuova password";
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent i = new Intent(CambioPassword.this, MainActivity.class);
+                                i.putExtra("Utenti", ut);
+                                startActivity(i);
+                                finish();
+                            }
+                        }, 1500);
                     }else{
                         Context context = getApplicationContext();
                         CharSequence text = "Errore Riprova";
@@ -153,16 +163,6 @@ public class CambioPassword extends AppCompatActivity {
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
                     }
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent i=new Intent(CambioPassword.this,MainActivity.class);
-                            i.putExtra("Utenti",ut);
-                            startActivity(i);
-                            finish();
-                        }
-                    }, 1500);
-
                 }else{
                     Context context = getApplicationContext();
                     CharSequence text = "CONTROLLA I CAMPI DELLE PASSWORD";
