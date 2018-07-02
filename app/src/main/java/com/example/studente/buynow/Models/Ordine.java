@@ -3,12 +3,13 @@ package com.example.studente.buynow.Models;
 import java.io.Serializable;
 
 public class Ordine implements Serializable {
-    private String indirizzofatt, indirizzosped, corriere = "null", dataArrivo = "null", posizione = "null";
-    private int codOrd, codCarr, codCarta_Sconto;
+    private String indirizzofatt, indirizzosped, corriere = "default", dataArrivo = "default", posizione = "default";
+    private int codOrd, codCarr;
+    private long codCarta_Sconto;
     private boolean carta_sconto;//TRUE CARTA FALSE BUONO SCONTO
-    private String pagamento;
+    private String pagamento = "default";
 
-    public Ordine(String indirizzofatt, String indirizzosped, int codOrd, int codCarr, int codCarta_Sconto, boolean carta_sconto) {
+    public Ordine(String indirizzofatt, String indirizzosped, int codOrd, int codCarr, long codCarta_Sconto, boolean carta_sconto) {
         this.indirizzofatt = indirizzofatt;
         this.indirizzosped = indirizzosped;
         this.codOrd = codOrd;
@@ -17,7 +18,7 @@ public class Ordine implements Serializable {
         this.carta_sconto = carta_sconto;
     }
 
-    public Ordine(String indirizzofatt, String indirizzosped, String corriere, String dataArrivo, String posizione, int codOrd, int codCarr, int codCarta_Sconto, boolean carta_sconto, String pagamento) {
+    public Ordine(String indirizzofatt, String indirizzosped, String corriere, String dataArrivo, String posizione, int codOrd, int codCarr, long codCarta_Sconto, boolean carta_sconto, String pagamento) {
         this.indirizzofatt = indirizzofatt;
         this.indirizzosped = indirizzosped;
         this.corriere = corriere;
@@ -86,11 +87,11 @@ public class Ordine implements Serializable {
         this.codCarr = codCarr;
     }
 
-    public int getCodCarta_Sconto() {
+    public long getCodCarta_Sconto() {
         return codCarta_Sconto;
     }
 
-    public void setCodCarta_Sconto(int codCarta_Sconto) {
+    public void setCodCarta_Sconto(long codCarta_Sconto) {
         this.codCarta_Sconto = codCarta_Sconto;
     }
 

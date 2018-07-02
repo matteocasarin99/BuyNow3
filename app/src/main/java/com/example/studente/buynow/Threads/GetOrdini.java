@@ -20,6 +20,6 @@ public class GetOrdini implements Callable<ArrayList<Ordine>> {
 
     @Override
     public ArrayList<Ordine> call() throws Exception {
-        return ut.getOrdini(idA, idcart);
+        return ut.getOrdini(idA);
     }
 }

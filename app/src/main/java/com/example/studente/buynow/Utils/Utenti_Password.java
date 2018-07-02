@@ -496,13 +496,13 @@ public class Utenti_Password implements Serializable {
         else return "Error";
     }
 
-    public ArrayList<Ordine> getOrdini(int idut, int idcart) {
+    public ArrayList<Ordine> getOrdini(int idut) {
         ArrayList<Ordine> arrayord = new ArrayList<Ordine>();
         URL url1;
         try {
             String risposta;
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=select%20*%20from%20ordini%20where%20fk_idcarrello=id_carrello%20and%20carrelli.fk_idutente='" + idut + "';");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=SELECT%20`id_ordine`,%20`fk_idcarrello`,%20`indirizzo_fatt`,%20`indirizzo_sped`,%20`corriere`,%20`posizione`,%20`dataConsegna`,%20`codiceSconto_Carta`,%20`Carta_Sconto`,%20`pagamento`%20from%20ordini,carrelli%20where%20ordini.fk_idcarrello=carrelli.id_carrello%20and%20carrelli.fk_idutente='" + idut + "';");
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
             connection.setRequestMethod("GET");
@@ -514,8 +514,10 @@ public class Utenti_Password implements Serializable {
             in.close();
             String s = response.toString();
             String indfat, indsped, corriere, posizione, datacon, pagamento;
-            int idord, idcarr, codcart;
+            int idord, idcarr;
+            long codcart;
             boolean carta_sconto;
+            System.out.println(s);
             array = jreader.responseJson(s);
             for (int j = 0; j < array.size(); j++) {
                 obj = (JSONObject) array.get(j);
@@ -527,7 +529,7 @@ public class Utenti_Password implements Serializable {
                 pagamento = obj.get("pagamento").toString();
                 idord = Integer.parseInt(obj.get("id_ordine").toString());
                 idcarr = Integer.parseInt(obj.get("fk_idcarrello").toString());
-                codcart = Integer.parseInt(obj.get("codiceSconto_Carta").toString());
+                codcart = Long.parseLong(obj.get("codiceSconto_Carta").toString());
                 if (obj.get("Carta_Sconto").toString().compareTo("Carta") == 0) {
                     carta_sconto = true;
                 } else {
@@ -548,9 +550,13 @@ public class Utenti_Password implements Serializable {
         URL url1;
         try {
             String risposta;
-            url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=INSERT%20INTO%20`my_prova12344`.`ordini`%20(`Carta_Sconto`,%20`codiceSconto_Carta`,%20`corriere`,%20`dataConsegna`,%20`fk_idcarrello`,%20`id_ordine`,%20`indirizzo_fatt`,%20`indirizzo_sped`,%20`posizione`,%20`pagamento`)%20VALUES%20('" + o.isCarta_sconto() + "',%20'" + o.getCodCarta_Sconto() + "',%20'" + o.getCorriere() + "',%20'" + o.getDataArrivo() + "',%20'" + o.getCodCarr() + "',%20'" + o.getCodOrd() + "',%20'" + o.getIndirizzofatt() + "',%20'" + o.getIndirizzosped() + "',%20'" + o.getPosizione() + "',%20'" + o.getPagamento() + "');");
-
+            if (o.getPosizione().compareTo("default") == 0) {
+                url1 = new URL(
+                        "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=INSERT%20INTO%20`my_prova12344`.`ordini`%20(`id_ordine`,%20`fk_idcarrello`,%20`indirizzo_fatt`,%20`indirizzo_sped`,%20`corriere`,%20`posizione`,%20`dataConsegna`,%20`codiceSconto_Carta`,%20`Carta_Sconto`,%20`pagamento`)%20VALUES%20('" + o.getCodOrd() + "',%20'" + o.getCodCarr() + "',%20'" + o.getIndirizzofatt() + "',%20'" + o.getIndirizzosped() + "',%20" + o.getCorriere() + ",%20" + o.getPosizione() + ",%20" + o.getDataArrivo() + ",%20'" + o.getCodCarta_Sconto() + "',%20'" + o.isCarta_sconto() + "',%20" + o.getPagamento() + ");");
+            } else {
+                url1 = new URL(
+                        "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=INSERT%20INTO%20`my_prova12344`.`ordini`%20(`id_ordine`,%20`fk_idcarrello`,%20`indirizzo_fatt`,%20`indirizzo_sped`,%20`corriere`,%20`posizione`,%20`dataConsegna`,%20`codiceSconto_Carta`,%20`Carta_Sconto`,%20`pagamento`)%20VALUES%20('" + o.getCodOrd() + "',%20'" + o.getCodCarr() + "',%20'" + o.getIndirizzofatt() + "',%20'" + o.getIndirizzosped() + "',%20'" + o.getCorriere() + "',%20'" + o.getPosizione() + "',%20'" + o.getDataArrivo() + "',%20'" + o.getCodCarta_Sconto() + "',%20'" + o.isCarta_sconto() + "',%20'" + o.getPagamento() + "');");
+            }
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
             connection.setRequestMethod("GET");
@@ -607,13 +613,13 @@ public class Utenti_Password implements Serializable {
         return b;
     }
 
-    public String rimuoviCart(int id_prod, int id_ut) {
+    public String rimuoviCart(int id_prod, int id_ut, int idcart) {
         boolean c = false;
         URL url1 = null;
         try {
             String risposta = "";
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=delete%20from%20carrelli%20where%20fk_idutente='" + id_ut + "'%20and%20fk_idprodotto='" + id_prod + "';");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=delete%20from%20carrelli%20where%20id_carrello=" + idcart + "%20fk_idutente=" + id_ut + "%20and%20fk_idprodotto=" + id_prod + ";");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -627,7 +633,7 @@ public class Utenti_Password implements Serializable {
             String s = response.toString();
             obj = jreader.responseJSonInsert(s);
             risposta = obj.get("azione").toString();
-            System.out.println(risposta);
+            System.out.println(risposta + "ELIMINA PPRODDDDDDDD!!!!!!");
             c = risposta.compareTo("Comando Errato") != 0;
         } catch (Exception e) {
             e.printStackTrace();

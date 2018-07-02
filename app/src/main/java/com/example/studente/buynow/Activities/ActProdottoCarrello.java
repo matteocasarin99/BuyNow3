@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.studente.buynow.Models.Prodotti;
 import com.example.studente.buynow.R;
+import com.example.studente.buynow.Threads.GetIDCart;
 import com.example.studente.buynow.Threads.GetURL;
 import com.example.studente.buynow.Threads.Rimuovi;
 import com.example.studente.buynow.Utils.Utenti_Password;
@@ -123,8 +124,18 @@ public class ActProdottoCarrello extends AppCompatActivity {
                         .setMessage("Rimuovere il prodotto?")
                         .setPositiveButton("SI", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
+                                ExecutorService executor2 = Executors.newFixedThreadPool(1);
+                                Callable<Integer> callable2 = new GetIDCart(idUt);
+                                Future<Integer> results2 = executor2.submit(callable2);
+                                int idcart = 100;
+                                try {
+                                    idcart = results2.get();
+                                } catch (Exception e) {
+                                    System.out.println("Interrupted while waiting for result: "
+                                            + e.getMessage());
+                                }
                                 executor = Executors.newFixedThreadPool(1);
-                                Callable<String> callable = new Rimuovi(ut, idUt, p.getId_prod());
+                                Callable<String> callable = new Rimuovi(ut, idUt, p.getId_prod(), idcart);
                                 result = executor.submit(callable);
                                 try {
                                     System.out.println("" + result.get());

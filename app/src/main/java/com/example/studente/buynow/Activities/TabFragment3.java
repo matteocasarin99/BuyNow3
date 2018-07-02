@@ -17,6 +17,7 @@ import com.example.studente.buynow.Adapters.AdapterJ;
 import com.example.studente.buynow.Models.Prodotti;
 import com.example.studente.buynow.R;
 import com.example.studente.buynow.Threads.GetCarrello;
+import com.example.studente.buynow.Threads.GetIDCart;
 import com.example.studente.buynow.Threads.Sum;
 import com.example.studente.buynow.Utils.Utenti_Password;
 
@@ -43,6 +44,7 @@ public class TabFragment3 extends Fragment {
     private ArrayList<Prodotti> arrayList;
     private double tot;
     private ExecutorService executor2;
+    private int idcart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -103,6 +105,16 @@ public class TabFragment3 extends Fragment {
                     Intent i = new Intent(getActivity(), Ordina.class);
                     i.putExtra("Utenti", ut);
                     i.putExtra("IdUt", idUt);
+                    ExecutorService executor = Executors.newFixedThreadPool(1);
+                    Callable<Integer> callable = new GetIDCart(idUt);
+                    Future<Integer> results = executor.submit(callable);
+                    try {
+                        idcart = results.get();
+                    } catch (Exception e) {
+                        System.out.println("Interrupted while waiting for result: "
+                                + e.getMessage());
+                    }
+                    i.putExtra("IdCarr", idcart);
                     startActivity(i);
                     getActivity().finish();
                 }

@@ -87,7 +87,7 @@ public class Ordina extends AppCompatActivity {
         setContentView(R.layout.ordina);
         ut = (Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
 
-        idCarr = (Integer) getIntent().getExtras().getSerializable("IdUt");
+        idCarr = (Integer) getIntent().getExtras().getSerializable("IdCarr");
         pass = Accedi_Act.password;
         radioGroup = findViewById(R.id.radioGroup);
         radioCarta = findViewById(R.id.radioCarta);
@@ -131,7 +131,7 @@ public class Ordina extends AppCompatActivity {
                     toast.show();
 
                 } else {
-                    Ordine o = new Ordine(textIndFatt.getText().toString(), textIndSped.getText().toString(), radn, idCarr, Integer.parseInt(textBuono_Carta.getText().toString()), carta_sconto);
+                    Ordine o = new Ordine(textIndFatt.getText().toString(), textIndSped.getText().toString(), radn, idCarr, Long.parseLong(textBuono_Carta.getText().toString()), carta_sconto);
                     executor = Executors.newFixedThreadPool(1);
                     Callable<String> callable = new AddOrdine(ut, o);
                     result = executor.submit(callable);
