@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.example.studente.buynow.Adapters.AdapterJOrdini;
 import com.example.studente.buynow.Models.Ordine;
 import com.example.studente.buynow.R;
+import com.example.studente.buynow.Threads.GetIDCart;
 import com.example.studente.buynow.Threads.GetOrdini;
 import com.example.studente.buynow.Utils.Utenti_Password;
 
@@ -24,6 +25,8 @@ public class Ordini extends AppCompatActivity {
     private AdapterJOrdini adapter;
     private int idUt;
     private Utenti_Password ut;
+    private Future<Integer> results2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +34,18 @@ public class Ordini extends AppCompatActivity {
         idUt = (Integer) getIntent().getExtras().getSerializable("Id");
         ut = (Utenti_Password) getIntent().getExtras().getSerializable("Utenti");
         ListView list = findViewById(R.id.listOrd);
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        Callable<Integer> callable2 = new GetIDCart(idUt);
+        Future<Integer> results2 = executor.submit(callable2);
+        int idcart = 100;
+        try {
+            idcart = results2.get();
+        } catch (Exception e) {
+            System.out.println("Interrupted while waiting for result: "
+                    + e.getMessage());
+        }
         executor = Executors.newFixedThreadPool(1);
-        Callable<ArrayList<Ordine>> callable = new GetOrdini(idUt, ut);
+        Callable<ArrayList<Ordine>> callable = new GetOrdini(idUt, ut, idcart);
         results = executor.submit(callable);
         try {
             System.out.println("computed result: " + results.get());

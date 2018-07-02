@@ -82,7 +82,7 @@ public class TabFragment3 extends Fragment {
             btnAcquista = view.findViewById(R.id.btnAcquista);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, final long id) {
+                public void onItemClick(AdapterView<?> parent, final View view, int position, final long id) {
                     final Prodotti p = (Prodotti) parent.getItemAtPosition(position);
                     new Handler().postDelayed(new Runnable() {
                         @Override

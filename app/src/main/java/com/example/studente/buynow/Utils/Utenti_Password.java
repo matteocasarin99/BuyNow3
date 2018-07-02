@@ -69,7 +69,6 @@ public class Utenti_Password implements Serializable {
         return b;
     }
 
-
     public String search_utente(String nome, String password) {
         String tipo = "nessuno";
         nome = nome.trim();
@@ -140,7 +139,6 @@ public class Utenti_Password implements Serializable {
         return tipo;
     }
 
-    //DA RIFARE!!
     public ArrayList<Prodotti> searchProdotti(String cerca) {
         ArrayList<Prodotti> array_prod = new ArrayList<Prodotti>();
         cerca = cerca.trim();
@@ -357,7 +355,6 @@ public class Utenti_Password implements Serializable {
         return c ? "Done" : "Error";
     }
 
-
     public String elimina(Prodotti prodotti) {
         boolean c = false;
         URL url1 = null;
@@ -463,7 +460,7 @@ public class Utenti_Password implements Serializable {
     public String addToCart(Prodotti p, int idutente, int quant) {
         boolean c = false;
         URL url1;
-        /*ExecutorService executor = Executors.newFixedThreadPool(1);
+        ExecutorService executor = Executors.newFixedThreadPool(1);
         Callable<Integer> callable = new GetIDCart(idutente);
         Future<Integer> results = executor.submit(callable);
         try {
@@ -471,11 +468,11 @@ public class Utenti_Password implements Serializable {
         } catch (Exception e) {
             System.out.println("Interrupted while waiting for result: "
                     + e.getMessage());
-        }*/
+        }
         try {
             String risposta;
             url1 = new URL(
-                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=INSERT%20INTO%20`my_prova12344`.`carrelli`%20(`id_carrello`,%20`fk_idutente`,%20`fk_idprodotto`,%20`quantitaOrd`)%20VALUES%20(NULL,%20'" + idutente + "',%20'" + p.getId_prod() + "',%20'" + quant + "');");
+                    "http://prova12344.altervista.org/ProgettoEsame/login.php?&query=INSERT%20INTO%20`my_prova12344`.`carrelli`%20(`id_carrello`,%20`fk_idutente`,%20`fk_idprodotto`,%20`quantitaOrd`)%20VALUES%20('" + idcart + "',%20'" + idutente + "',%20'" + p.getId_prod() + "',%20'" + quant + "');");
 
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.76");
@@ -499,7 +496,7 @@ public class Utenti_Password implements Serializable {
         else return "Error";
     }
 
-    public ArrayList<Ordine> getOrdini(int idut) {
+    public ArrayList<Ordine> getOrdini(int idut, int idcart) {
         ArrayList<Ordine> arrayord = new ArrayList<Ordine>();
         URL url1;
         try {
